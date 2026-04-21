@@ -78,10 +78,10 @@
     }
 
     .hero-logo {
-      width: 110px;
-      max-width: 30vw;
-      margin-bottom: 22px;
-      filter: drop-shadow(0 0 22px rgba(59,130,246,0.45));
+      width: 180px;
+      max-width: 42vw;
+      margin-bottom: 26px;
+      filter: drop-shadow(0 0 30px rgba(59,130,246,0.55));
     }
 
     .eyebrow {
@@ -287,6 +287,14 @@
       box-shadow: 0 10px 32px rgba(0,0,0,0.24);
     }
 
+    .waitlist-logo {
+      display: block;
+      width: 120px;
+      max-width: 28vw;
+      margin: 0 auto 18px;
+      filter: drop-shadow(0 0 24px rgba(59,130,246,0.45));
+    }
+
     .waitlist-wrap p {
       color: #cbd5e1;
       margin-bottom: 22px;
@@ -338,6 +346,59 @@
       margin-top: 14px;
       font-size: 13px;
       color: #94a3b8;
+    }
+
+    .success-modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(2, 6, 23, 0.82);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      z-index: 9999;
+    }
+
+    .success-modal.show {
+      display: flex;
+    }
+
+    .success-modal-card {
+      width: 100%;
+      max-width: 460px;
+      background: #0f172a;
+      border: 1px solid rgba(148,163,184,0.18);
+      border-radius: 20px;
+      padding: 32px 28px;
+      text-align: center;
+      box-shadow: 0 18px 50px rgba(0,0,0,0.38);
+    }
+
+    .success-modal-logo {
+      width: 92px;
+      margin-bottom: 16px;
+      filter: drop-shadow(0 0 22px rgba(59,130,246,0.45));
+    }
+
+    .success-modal-card h3 {
+      margin: 0 0 10px;
+      font-size: 28px;
+    }
+
+    .success-modal-card p {
+      margin: 0 0 20px;
+      color: #cbd5e1;
+    }
+
+    .success-modal-card button {
+      padding: 12px 18px;
+      border: none;
+      border-radius: 12px;
+      background: linear-gradient(135deg, #3b82f6, #2563eb);
+      color: white;
+      font-size: 15px;
+      font-weight: bold;
+      cursor: pointer;
     }
 
     .footer {
@@ -521,12 +582,19 @@ Packaging</div>
   <section id="waitlist" class="section">
     <div class="container">
       <div class="waitlist-wrap">
+        <img class="waitlist-logo" src="Logo.jpg" alt="AISYN logo">
         <h2>Join the Waitlist</h2>
         <p>
           AISYN is not publicly launched yet. Join the waitlist for updates, early access information, and future announcements.
         </p>
 
-        <form name="aisyn-waitlist" method="POST" data-netlify="true" netlify-honeypot="bot-field">
+        <form
+          id="aisyn-waitlist-form"
+          name="aisyn-waitlist"
+          method="POST"
+          data-netlify="true"
+          netlify-honeypot="bot-field"
+        >
           <input type="hidden" name="form-name" value="aisyn-waitlist">
 
           <p style="display:none;">
@@ -555,10 +623,72 @@ Packaging</div>
     </div>
   </section>
 
+  <div id="success-modal" class="success-modal" aria-hidden="true">
+    <div class="success-modal-card">
+      <img class="success-modal-logo" src="Logo.jpg" alt="AISYN logo">
+      <h3>You’re on the list.</h3>
+      <p>
+        Thanks for joining the AISYN waitlist. We’ll send updates, early access information, and future announcements to your email.
+      </p>
+      <button id="close-success-modal" type="button">Close</button>
+    </div>
+  </div>
+
   <div class="container">
     <div class="footer">
       © 2026 AISYN Systems. All rights reserved.
     </div>
   </div>
+
+  <script>
+    const waitlistForm = document.getElementById("aisyn-waitlist-form");
+    const successModal = document.getElementById("success-modal");
+    const closeSuccessModal = document.getElementById("close-success-modal");
+
+    function encodeFormData(form) {
+      const formData = new FormData(form);
+      return new URLSearchParams(formData).toString();
+    }
+
+    if (waitlistForm) {
+      waitlistForm.addEventListener("submit", async function (event) {
+        event.preventDefault();
+
+        try {
+          const response = await fetch("/", {
+            method: "POST",
+            headers: { "Content-Type": "application/x-www-form-urlencoded" },
+            body: encodeFormData(waitlistForm)
+          });
+
+          if (!response.ok) {
+            throw new Error("Submission failed.");
+          }
+
+          waitlistForm.reset();
+          successModal.classList.add("show");
+          successModal.setAttribute("aria-hidden", "false");
+        } catch (error) {
+          alert("Something went wrong submitting the form. Please try again.");
+        }
+      });
+    }
+
+    if (closeSuccessModal) {
+      closeSuccessModal.addEventListener("click", function () {
+        successModal.classList.remove("show");
+        successModal.setAttribute("aria-hidden", "true");
+      });
+    }
+
+    if (successModal) {
+      successModal.addEventListener("click", function (event) {
+        if (event.target === successModal) {
+          successModal.classList.remove("show");
+          successModal.setAttribute("aria-hidden", "true");
+        }
+      });
+    }
+  </script>
 </body>
-</html>
+</html>Here is my full file rewrite. this is what I have right now. two things I need. 1. Better page overall. 2. Logo as big centerpiece. 
