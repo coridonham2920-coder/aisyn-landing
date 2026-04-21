@@ -1,159 +1,564 @@
-```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>AISYN Systems — Build Software Automatically</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<style>
+  <meta charset="UTF-8" />
+  <title>AISYN Systems — Software Creation, Reimagined</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="AISYN is building a system that turns plain instructions into working software." />
+  <style>
+    * {
+      box-sizing: border-box;
+    }
 
-body {
-  margin: 0;
-  font-family: Inter, Arial, sans-serif;
-  background: linear-gradient(180deg, #070b16, #0b1020);
-  color: #ffffff;
-}
+    html {
+      scroll-behavior: smooth;
+    }
 
-.container {
-  max-width: 1100px;
-  margin: auto;
-  padding: 20px;
-}
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background:
+        radial-gradient(circle at top, rgba(59,130,246,0.22), transparent 35%),
+        linear-gradient(180deg, #050811 0%, #0a1020 45%, #070b16 100%);
+      color: #ffffff;
+      line-height: 1.6;
+    }
 
-.hero {
-  text-align: center;
-  padding: 100px 20px;
-}
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
 
-.hero h1 {
-  font-size: 56px;
-  margin-bottom: 20px;
-}
+    .container {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
 
-.hero p {
-  font-size: 20px;
-  color: #aab;
-  max-width: 700px;
-  margin: auto;
-}
+    .nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 24px 0;
+      position: sticky;
+      top: 0;
+      backdrop-filter: blur(10px);
+      background: rgba(5, 8, 17, 0.72);
+      z-index: 10;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
 
-.btn {
-  display: inline-block;
-  margin-top: 25px;
-  padding: 14px 26px;
-  background: #4f8cff;
-  border-radius: 10px;
-  font-weight: bold;
-}
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 22px;
+      font-weight: bold;
+      letter-spacing: 0.5px;
+    }
 
-.section {
-  padding: 70px 20px;
-}
+    .brand img {
+      width: 42px;
+      height: 42px;
+      object-fit: contain;
+      border-radius: 10px;
+      box-shadow: 0 0 24px rgba(59,130,246,0.35);
+    }
 
-.grid {
-  display: grid;
-  gap: 20px;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-}
+    .nav-links {
+      display: flex;
+      gap: 22px;
+      font-size: 14px;
+      color: #cbd5e1;
+    }
 
-.card {
-  background: #11162a;
-  padding: 25px;
-  border-radius: 12px;
-}
+    .hero {
+      padding: 96px 0 78px;
+      text-align: center;
+    }
 
-.waitlist input {
-  padding: 12px;
-  width: 260px;
-  border-radius: 8px;
-  border: none;
-}
+    .hero-logo {
+      width: 110px;
+      max-width: 30vw;
+      margin-bottom: 22px;
+      filter: drop-shadow(0 0 22px rgba(59,130,246,0.45));
+    }
 
-.waitlist button {
-  padding: 12px 20px;
-  margin-left: 10px;
-  background: #4f8cff;
-  border: none;
-  border-radius: 8px;
-  color: white;
-  font-weight: bold;
-}
+    .eyebrow {
+      display: inline-block;
+      margin-bottom: 18px;
+      padding: 8px 14px;
+      border: 1px solid rgba(96,165,250,0.28);
+      border-radius: 999px;
+      background: rgba(15,23,42,0.75);
+      color: #bfdbfe;
+      font-size: 13px;
+      letter-spacing: 0.3px;
+    }
 
-.footer {
-  text-align: center;
-  padding: 40px;
-  color: #888;
-}
+    .hero h1 {
+      font-size: 58px;
+      line-height: 1.05;
+      margin: 0 0 18px;
+    }
 
-</style>
+    .hero p {
+      max-width: 780px;
+      margin: 0 auto 30px;
+      font-size: 20px;
+      color: #cbd5e1;
+    }
+
+    .hero-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 14px 24px;
+      border-radius: 12px;
+      font-weight: bold;
+      font-size: 15px;
+      transition: 0.2s ease;
+      border: 1px solid transparent;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #3b82f6, #2563eb);
+      color: #ffffff;
+      box-shadow: 0 10px 28px rgba(37, 99, 235, 0.32);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-1px);
+      background: linear-gradient(135deg, #4b8df7, #2b6eef);
+    }
+
+    .btn-secondary {
+      border-color: rgba(148,163,184,0.28);
+      color: #e2e8f0;
+      background: rgba(15,23,42,0.6);
+    }
+
+    .btn-secondary:hover {
+      background: rgba(17,24,39,0.95);
+    }
+
+    .hero-stats {
+      margin-top: 34px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 14px;
+    }
+
+    .stat {
+      background: rgba(17,24,39,0.72);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 16px;
+      padding: 18px;
+    }
+
+    .stat strong {
+      display: block;
+      font-size: 18px;
+      color: #f8fafc;
+      margin-bottom: 4px;
+    }
+
+    .stat span {
+      color: #94a3b8;
+      font-size: 14px;
+    }
+
+    .section {
+      padding: 74px 0;
+      border-top: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .section h2 {
+      text-align: center;
+      font-size: 38px;
+      margin: 0 0 14px;
+    }
+
+    .section-subtext {
+      max-width: 760px;
+      margin: 0 auto 42px;
+      text-align: center;
+      color: #cbd5e1;
+      font-size: 18px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 22px;
+    }
+
+    .card {
+      background: rgba(15,23,42,0.82);
+      border: 1px solid rgba(148,163,184,0.14);
+      border-radius: 18px;
+      padding: 26px;
+      box-shadow: 0 10px 32px rgba(0,0,0,0.24);
+    }
+
+    .card h3 {
+      margin: 0 0 10px;
+      font-size: 22px;
+    }
+
+    .card p {
+      margin: 0;
+      color: #cbd5e1;
+      font-size: 15px;
+    }
+
+    .story-wrap {
+      max-width: 860px;
+      margin: 0 auto;
+      background: rgba(15,23,42,0.82);
+      border: 1px solid rgba(148,163,184,0.14);
+      border-radius: 18px;
+      padding: 34px;
+      color: #dbeafe;
+      box-shadow: 0 10px 32px rgba(0,0,0,0.24);
+    }
+
+    .story-wrap p {
+      margin: 0 0 16px;
+      font-size: 17px;
+      color: #cbd5e1;
+    }
+
+    .pipeline-box {
+      max-width: 860px;
+      margin: 0 auto;
+      background: rgba(15,23,42,0.82);
+      border: 1px solid rgba(148,163,184,0.14);
+      border-radius: 18px;
+      padding: 28px;
+      font-family: Consolas, monospace;
+      white-space: pre-wrap;
+      color: #bfdbfe;
+      box-shadow: 0 10px 32px rgba(0,0,0,0.24);
+    }
+
+    .split-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 24px;
+    }
+
+    .split-card {
+      background: rgba(15,23,42,0.82);
+      border: 1px solid rgba(148,163,184,0.14);
+      border-radius: 18px;
+      padding: 28px;
+      box-shadow: 0 10px 32px rgba(0,0,0,0.24);
+    }
+
+    .split-card h3 {
+      font-size: 26px;
+      margin: 0 0 12px;
+    }
+
+    .split-card ul {
+      margin: 0;
+      padding-left: 18px;
+      color: #cbd5e1;
+    }
+
+    .split-card li {
+      margin-bottom: 10px;
+    }
+
+    .waitlist-wrap {
+      max-width: 780px;
+      margin: 0 auto;
+      text-align: center;
+      background: rgba(15,23,42,0.82);
+      border: 1px solid rgba(148,163,184,0.14);
+      border-radius: 20px;
+      padding: 34px;
+      box-shadow: 0 10px 32px rgba(0,0,0,0.24);
+    }
+
+    .waitlist-wrap p {
+      color: #cbd5e1;
+      margin-bottom: 22px;
+      font-size: 17px;
+    }
+
+    .waitlist-form {
+      display: grid;
+      gap: 14px;
+      max-width: 560px;
+      margin: 0 auto;
+      text-align: left;
+    }
+
+    .waitlist-form input,
+    .waitlist-form select,
+    .waitlist-form textarea {
+      width: 100%;
+      padding: 14px 16px;
+      border-radius: 12px;
+      border: 1px solid rgba(148,163,184,0.22);
+      background: #0b1220;
+      color: #ffffff;
+      font-size: 15px;
+    }
+
+    .waitlist-form textarea {
+      min-height: 120px;
+      resize: vertical;
+    }
+
+    .waitlist-form button {
+      padding: 15px 18px;
+      border: none;
+      border-radius: 12px;
+      background: linear-gradient(135deg, #3b82f6, #2563eb);
+      color: white;
+      font-size: 15px;
+      font-weight: bold;
+      cursor: pointer;
+      box-shadow: 0 10px 28px rgba(37,99,235,0.32);
+    }
+
+    .waitlist-form button:hover {
+      transform: translateY(-1px);
+    }
+
+    .fine-print {
+      margin-top: 14px;
+      font-size: 13px;
+      color: #94a3b8;
+    }
+
+    .footer {
+      border-top: 1px solid rgba(255,255,255,0.06);
+      padding: 28px 0 42px;
+      text-align: center;
+      color: #94a3b8;
+      font-size: 14px;
+    }
+
+    @media (max-width: 768px) {
+      .nav {
+        flex-direction: column;
+        gap: 14px;
+      }
+
+      .hero h1 {
+        font-size: 40px;
+      }
+
+      .hero p {
+        font-size: 18px;
+      }
+
+      .section h2 {
+        font-size: 30px;
+      }
+
+      .waitlist-wrap,
+      .story-wrap,
+      .pipeline-box {
+        padding: 24px;
+      }
+    }
+  </style>
 </head>
-
 <body>
-
-<div class="container">
-
-<!-- HERO -->
-<div class="hero">
-  <h1>Software Creation, Reimagined</h1>
-  <p>AISYN is building a system that turns plain instructions into working software through structured generation, repair, and execution.</p>
-  <a class="btn" href="#waitlist">Get Early Access</a>
-</div>
-
-<!-- WHAT -->
-<div class="section">
-  <h2 style="text-align:center;">What AISYN Does</h2>
-  <div class="grid">
-    <div class="card"><h3>Generate</h3><p>Turns prompts into real working code.</p></div>
-    <div class="card"><h3>Repair</h3><p>Automatically fixes errors and failures.</p></div>
-    <div class="card"><h3>Validate</h3><p>Ensures outputs actually run.</p></div>
-    <div class="card"><h3>Package</h3><p>Delivers clean, usable outputs.</p></div>
-  </div>
-</div>
-
-<!-- DEV VS COMPANY -->
-<div class="section">
-  <h2 style="text-align:center;">Who It's For</h2>
-  <div class="grid">
-    <div class="card">
-      <h3>For Developers</h3>
-      <p>Accelerate workflows, reduce boilerplate, and build faster with structured automation.</p>
+  <div class="container">
+    <div class="nav">
+      <div class="brand">
+        <img src="Logo.jpg" alt="AISYN logo">
+        <span>AISYN Systems</span>
+      </div>
+      <div class="nav-links">
+        <a href="#about">About</a>
+        <a href="#story">Story</a>
+        <a href="#for-you">Who It’s For</a>
+        <a href="#waitlist">Waitlist</a>
+      </div>
     </div>
-    <div class="card">
-      <h3>For Companies</h3>
-      <p>Standardize software creation and reduce time from idea to working systems.</p>
+
+    <section class="hero">
+      <img class="hero-logo" src="Logo.jpg" alt="AISYN logo">
+      <div class="eyebrow">Autonomous Intelligence System</div>
+      <h1>Software Creation, Reimagined</h1>
+      <p>
+        AISYN is building a system that turns plain instructions into working software through structured generation, repair, validation, and packaging.
+      </p>
+      <div class="hero-buttons">
+        <a class="btn btn-primary" href="#waitlist">Join the Waitlist</a>
+        <a class="btn btn-secondary" href="#story">Why AISYN Exists</a>
+      </div>
+
+      <div class="hero-stats">
+        <div class="stat">
+          <strong>Prompt → Program</strong>
+          <span>Move from intent to working output faster.</span>
+        </div>
+        <div class="stat">
+          <strong>Built in Phases</strong>
+          <span>Structured, test-driven system development.</span>
+        </div>
+        <div class="stat">
+          <strong>Pre-Launch</strong>
+          <span>Follow the build before public release.</span>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <section id="about" class="section">
+    <div class="container">
+      <h2>What AISYN Is</h2>
+      <p class="section-subtext">
+        AISYN is not just a code generator. It is a system designed to move from idea to working output through a repeatable pipeline.
+      </p>
+      <div class="grid">
+        <div class="card">
+          <h3>Generate</h3>
+          <p>Turn prompts into structured code output.</p>
+        </div>
+        <div class="card">
+          <h3>Repair</h3>
+          <p>Automatically identify and correct failures in generated output.</p>
+        </div>
+        <div class="card">
+          <h3>Validate</h3>
+          <p>Check results through reports, execution, and review layers.</p>
+        </div>
+        <div class="card">
+          <h3>Package</h3>
+          <p>Prepare finished outputs in a clean, usable form.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="story" class="section">
+    <div class="container">
+      <h2>Why AISYN Exists</h2>
+      <p class="section-subtext">
+        Software creation is still too manual, too fragmented, and too slow.
+      </p>
+      <div class="story-wrap">
+        <p>
+          AISYN is being built to reduce the distance between an idea and a working system.
+        </p>
+        <p>
+          Instead of stopping at code generation, the goal is to build a structured pipeline that can generate, repair, validate, execute, and package software in a controlled way.
+        </p>
+        <p>
+          The long-term vision is not just faster coding. It is a more complete system for software creation itself.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <h2>How It Works</h2>
+      <p class="section-subtext">
+        AISYN follows a structured software creation pipeline designed for repeatability and control.
+      </p>
+      <div class="pipeline-box">Prompt
+↓
+Specification
+↓
+Task Breakdown
+↓
+Code Generation
+↓
+Repair Loop
+↓
+Validation
+↓
+Execution
+↓
+Packaging</div>
+    </div>
+  </section>
+
+  <section id="for-you" class="section">
+    <div class="container">
+      <h2>Who It’s For</h2>
+      <p class="section-subtext">
+        AISYN is being shaped for both technical builders and teams that want faster software creation.
+      </p>
+      <div class="split-grid">
+        <div class="split-card">
+          <h3>For Developers</h3>
+          <ul>
+            <li>Reduce repetitive setup and boilerplate work</li>
+            <li>Move faster from prompt to usable output</li>
+            <li>Use structured reports and artifacts for review</li>
+            <li>Work with a system built around repeatability</li>
+          </ul>
+        </div>
+        <div class="split-card">
+          <h3>For Companies</h3>
+          <ul>
+            <li>Reduce time from idea to working internal tools</li>
+            <li>Standardize software creation pipelines</li>
+            <li>Improve visibility into generated outputs and validation</li>
+            <li>Prepare for scalable, system-level automation</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="waitlist" class="section">
+    <div class="container">
+      <div class="waitlist-wrap">
+        <h2>Join the Waitlist</h2>
+        <p>
+          AISYN is not publicly launched yet. Join the waitlist for updates, early access information, and future announcements.
+        </p>
+
+        <form name="aisyn-waitlist" method="POST" data-netlify="true" netlify-honeypot="bot-field">
+          <input type="hidden" name="form-name" value="aisyn-waitlist">
+
+          <p style="display:none;">
+            <label>Don’t fill this out if you’re human: <input name="bot-field"></label>
+          </p>
+
+          <div class="waitlist-form">
+            <input type="text" name="name" placeholder="Your name" required>
+            <input type="email" name="email" placeholder="Your email" required>
+            <select name="interest">
+              <option value="">I’m interested in...</option>
+              <option value="developer">Using AISYN as a developer</option>
+              <option value="company">Using AISYN for a company</option>
+              <option value="early-access">Early access</option>
+              <option value="updates">General updates</option>
+            </select>
+            <textarea name="message" placeholder="Optional message"></textarea>
+            <button type="submit">Join Waitlist</button>
+          </div>
+        </form>
+
+        <div class="fine-print">
+          Prefer direct contact? Email us at aisyn.systems@gmail.com
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="container">
+    <div class="footer">
+      © 2026 AISYN Systems. All rights reserved.
     </div>
   </div>
-</div>
-
-<!-- STORY -->
-<div class="section">
-  <h2 style="text-align:center;">Why AISYN Exists</h2>
-  <p style="max-width:800px;margin:auto;text-align:center;color:#aaa;">
-    Software creation today is fragmented, manual, and inconsistent.
-    AISYN is being built to close the gap between an idea and a working system.
-    Instead of writing everything from scratch, the system handles generation,
-    repair, validation, and packaging as a single pipeline.
-  </p>
-</div>
-
-<!-- WAITLIST -->
-<div class="section" id="waitlist" style="text-align:center;">
-  <h2>Get Early Access</h2>
-  <p style="color:#aaa;">AISYN is not publicly launched yet. Join the waitlist for updates.</p>
-
-  <form class="waitlist" action="mailto:aisyn.systems@gmail.com" method="post" enctype="text/plain">
-    <input type="email" name="email" placeholder="Enter your email" required>
-    <button type="submit">Join</button>
-  </form>
-</div>
-
-<!-- FOOTER -->
-<div class="footer">
-  © 2026 AISYN Systems — All rights reserved
-</div>
-
-</div>
-
 </body>
 </html>
-```
