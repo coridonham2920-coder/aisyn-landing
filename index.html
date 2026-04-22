@@ -2,13 +2,36 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>AISYN Systems — Autonomous Intelligence System</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AISYN Systems — Autonomous Intelligence System</title>
   <meta
     name="description"
-    content="AISYN is building a structured autonomous software creation system that turns intent into working software through generation, repair, validation, and packaging."
+    content="AISYN Systems is building a structured software creation pipeline that moves from prompt to validated, packaged output."
   />
   <style>
+    :root {
+      --bg: #020814;
+      --bg-2: #041020;
+      --panel: rgba(8, 16, 30, 0.82);
+      --panel-2: rgba(6, 14, 28, 0.9);
+      --line: rgba(70, 130, 255, 0.18);
+      --line-strong: rgba(83, 144, 255, 0.35);
+      --text: #eaf1ff;
+      --muted: #94a7c7;
+      --soft: #6f82a9;
+      --blue: #4a8bff;
+      --blue-2: #2d6fff;
+      --cyan: #7be7ff;
+      --purple: #8856ff;
+      --glow: 0 0 30px rgba(67, 123, 255, 0.3);
+      --radius-lg: 22px;
+      --radius-md: 16px;
+      --radius-sm: 12px;
+      --shadow-card: 0 18px 60px rgba(0, 0, 0, 0.45);
+      --shadow-soft: 0 0 0 1px rgba(83, 144, 255, 0.14), 0 20px 40px rgba(0, 0, 0, 0.32);
+      --max: 1220px;
+    }
+
     * {
       box-sizing: border-box;
     }
@@ -17,32 +40,43 @@
       scroll-behavior: smooth;
     }
 
-    :root {
-      --bg-1: #020611;
-      --bg-2: #040b18;
-      --bg-3: #06101f;
-      --line: rgba(88, 137, 255, 0.14);
-      --line-strong: rgba(88, 137, 255, 0.28);
-      --text: #eef5ff;
-      --muted: #a8bdd8;
-      --blue: #3d8bff;
-      --blue-2: #66b8ff;
-      --purple: #7b4dff;
-      --panel: rgba(6, 14, 28, 0.82);
-      --panel-2: rgba(7, 16, 32, 0.9);
-      --shadow: 0 14px 42px rgba(0, 0, 0, 0.35);
-    }
-
     body {
       margin: 0;
-      font-family: Arial, sans-serif;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
       color: var(--text);
       background:
-        radial-gradient(circle at 50% 12%, rgba(45, 125, 255, 0.22), transparent 18%),
-        radial-gradient(circle at 50% 25%, rgba(32, 119, 255, 0.12), transparent 28%),
-        linear-gradient(180deg, #020611 0%, #030916 22%, #020713 100%);
+        radial-gradient(circle at 50% 0%, rgba(36, 87, 255, 0.24), transparent 24%),
+        radial-gradient(circle at 50% 18%, rgba(67, 123, 255, 0.16), transparent 32%),
+        linear-gradient(180deg, #010611 0%, #020915 22%, #020814 100%);
+      min-height: 100vh;
       overflow-x: hidden;
-      line-height: 1.6;
+      position: relative;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background:
+        linear-gradient(rgba(46, 101, 255, 0.06) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(46, 101, 255, 0.06) 1px, transparent 1px);
+      background-size: 100% 160px, 160px 100%;
+      pointer-events: none;
+      opacity: 0.55;
+      z-index: 0;
+    }
+
+    body::after {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background:
+        radial-gradient(circle at 20% 12%, rgba(115, 172, 255, 0.12), transparent 12%),
+        radial-gradient(circle at 78% 20%, rgba(84, 106, 255, 0.12), transparent 12%),
+        radial-gradient(circle at 12% 65%, rgba(60, 145, 255, 0.08), transparent 10%),
+        radial-gradient(circle at 88% 72%, rgba(125, 92, 255, 0.08), transparent 10%);
+      pointer-events: none;
+      z-index: 0;
     }
 
     a {
@@ -50,147 +84,78 @@
       text-decoration: none;
     }
 
-    .site-bg {
-      position: fixed;
-      inset: 0;
+    button,
+    input,
+    textarea,
+    select {
+      font: inherit;
+    }
+
+    .page-shell {
+      position: relative;
+      z-index: 1;
+    }
+
+    .ambient-line {
+      position: absolute;
       pointer-events: none;
+      opacity: 0.45;
+      filter: blur(0.2px);
       z-index: 0;
-      overflow: hidden;
     }
 
-    .grid-overlay {
-      position: absolute;
-      inset: 0;
-      background:
-        linear-gradient(rgba(44, 112, 255, 0.07) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(44, 112, 255, 0.07) 1px, transparent 1px);
-      background-size: 110px 110px;
-      opacity: 0.2;
-      mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.8), transparent 78%);
-      -webkit-mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.8), transparent 78%);
-    }
-
-    .hero-floor {
-      position: absolute;
+    .ambient-line.one {
+      top: 145px;
       left: 50%;
-      top: 300px;
-      width: 1800px;
-      max-width: 180vw;
-      height: 1100px;
-      transform: translateX(-50%) perspective(1300px) rotateX(79deg);
-      background:
-        linear-gradient(rgba(55, 132, 255, 0.12) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(55, 132, 255, 0.12) 1px, transparent 1px);
-      background-size: 74px 74px;
-      opacity: 0.5;
-      box-shadow: 0 0 100px rgba(34, 102, 255, 0.12);
+      width: 760px;
+      height: 1px;
+      transform: translateX(-50%) rotate(-8deg);
+      background: linear-gradient(90deg, transparent, rgba(65, 140, 255, 0.52), transparent);
+      box-shadow: 0 0 20px rgba(63, 130, 255, 0.22);
     }
 
-    .light-trail {
-      position: absolute;
-      height: 4px;
-      width: 480px;
-      border-radius: 999px;
-      background: linear-gradient(90deg, transparent, rgba(90, 170, 255, 0.95), transparent);
-      filter: blur(3px);
-      opacity: 0.7;
-    }
-
-    .light-trail.left {
-      left: -50px;
-      top: 42%;
+    .ambient-line.two {
+      top: 390px;
+      left: -120px;
+      width: 420px;
+      height: 1px;
       transform: rotate(8deg);
-      animation: driftLeft 14s ease-in-out infinite;
+      background: linear-gradient(90deg, transparent, rgba(65, 140, 255, 0.45), transparent);
     }
 
-    .light-trail.right {
-      right: -70px;
-      top: 69%;
-      transform: rotate(-10deg);
-      animation: driftRight 16s ease-in-out infinite;
-    }
-
-    .code-block {
-      position: absolute;
-      color: rgba(110, 180, 255, 0.74);
-      font-family: Consolas, monospace;
-      font-size: 13px;
-      line-height: 1.9;
-      white-space: pre;
-      text-shadow: 0 0 10px rgba(37, 114, 255, 0.2);
-      animation: floatCode 16s ease-in-out infinite;
-    }
-
-    .code-block.left {
-      left: 3%;
-      top: 110px;
-      max-width: 330px;
-    }
-
-    .code-block.right {
-      right: 3%;
-      top: 120px;
-      max-width: 320px;
-      animation-delay: -4s;
-      animation-duration: 18s;
-    }
-
-    .code-block.lower {
-      right: 10%;
-      top: 980px;
-      max-width: 260px;
-      animation-delay: -3s;
-      animation-duration: 15s;
-    }
-
-    .stack-rail {
-      position: absolute;
-      right: 4%;
-      top: 230px;
-      display: grid;
-      gap: 10px;
-      opacity: 0.88;
-    }
-
-    .stack-box {
-      width: 148px;
-      padding: 10px 14px;
-      border: 1px solid rgba(79, 131, 255, 0.32);
-      border-radius: 10px;
-      background: rgba(6, 16, 32, 0.72);
-      color: #8fc3ff;
-      font-size: 13px;
-      font-weight: 700;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      text-align: center;
-      box-shadow: 0 0 18px rgba(38, 97, 255, 0.08);
+    .ambient-line.three {
+      right: -100px;
+      top: 770px;
+      width: 340px;
+      height: 1px;
+      transform: rotate(-14deg);
+      background: linear-gradient(90deg, transparent, rgba(65, 140, 255, 0.4), transparent);
     }
 
     .container {
-      position: relative;
-      z-index: 1;
-      width: 100%;
-      max-width: 1280px;
+      width: min(var(--max), calc(100% - 48px));
       margin: 0 auto;
-      padding: 0 26px;
+      position: relative;
+      z-index: 2;
     }
 
-    .nav-shell {
+    .topbar-wrap {
       position: sticky;
       top: 0;
       z-index: 50;
-      background: rgba(3, 9, 20, 0.72);
-      backdrop-filter: blur(14px);
-      border-bottom: 1px solid rgba(97, 140, 255, 0.08);
+      backdrop-filter: blur(18px);
+      background: linear-gradient(180deg, rgba(2, 8, 20, 0.9), rgba(2, 8, 20, 0.48));
+      border-bottom: 1px solid rgba(70, 130, 255, 0.08);
     }
 
-    .nav {
-      min-height: 88px;
+    .topbar {
+      width: min(1380px, calc(100% - 40px));
+      margin: 0 auto;
+      height: 84px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 18px;
+      gap: 20px;
     }
 
     .brand {
@@ -200,699 +165,1370 @@
       min-width: 0;
     }
 
-    .brand img {
-      width: 44px;
-      height: 44px;
-      object-fit: contain;
-      filter: drop-shadow(0 0 14px rgba(58, 139, 255, 0.35));
+    .brand-mark {
+      width: 36px;
+      height: 36px;
+      border-radius: 12px;
+      display: grid;
+      place-items: center;
+      position: relative;
+      background:
+        radial-gradient(circle at 30% 20%, rgba(130, 214, 255, 0.45), transparent 38%),
+        linear-gradient(180deg, rgba(73, 145, 255, 0.18), rgba(9, 17, 32, 0.1));
+      box-shadow: inset 0 0 0 1px rgba(120, 183, 255, 0.12), 0 0 18px rgba(63, 122, 255, 0.22);
+      overflow: hidden;
     }
 
-    .brand span {
-      font-size: 19px;
+    .brand-mark::before {
+      content: "A";
+      font-size: 27px;
+      font-weight: 800;
+      letter-spacing: -0.06em;
+      color: #8fe3ff;
+      text-shadow: 0 0 18px rgba(110, 202, 255, 0.45);
+      transform: translateY(-1px);
+    }
+
+    .brand-text {
+      font-size: 1.18rem;
       font-weight: 700;
-      letter-spacing: 0.18em;
-      color: #f2f7ff;
+      letter-spacing: 0.28em;
       text-transform: uppercase;
       white-space: nowrap;
     }
 
-    .nav-links {
+    .nav {
       display: flex;
       align-items: center;
       gap: 28px;
-      color: #c0d4ec;
-      font-size: 15px;
     }
 
-    .nav-links a:hover {
-      color: white;
+    .nav a {
+      color: #d7e3ff;
+      font-size: 0.95rem;
+      font-weight: 500;
+      opacity: 0.92;
+      transition: color 0.2s ease, opacity 0.2s ease;
     }
 
-    .nav-button {
+    .nav a:hover {
+      color: #ffffff;
+      opacity: 1;
+    }
+
+    .nav-cta {
       display: inline-flex;
       align-items: center;
       justify-content: center;
       min-width: 148px;
-      padding: 13px 18px;
-      border: 1px solid rgba(79, 131, 255, 0.42);
+      height: 48px;
+      padding: 0 24px;
       border-radius: 14px;
-      background: rgba(10, 23, 46, 0.76);
-      color: white;
+      border: 1px solid rgba(82, 138, 255, 0.42);
+      background: linear-gradient(180deg, rgba(9, 27, 66, 0.92), rgba(6, 18, 46, 0.9));
+      color: #f0f5ff;
       font-weight: 700;
-      box-shadow: 0 0 24px rgba(50, 111, 255, 0.1);
+      box-shadow: inset 0 0 0 1px rgba(98, 157, 255, 0.18), 0 0 24px rgba(54, 118, 255, 0.18);
+      transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+    }
+
+    .nav-cta:hover {
+      transform: translateY(-1px);
+      border-color: rgba(123, 174, 255, 0.58);
+      box-shadow: inset 0 0 0 1px rgba(120, 175, 255, 0.2), 0 0 34px rgba(54, 118, 255, 0.24);
+    }
+
+    .mobile-toggle {
+      display: none;
+      width: 48px;
+      height: 48px;
+      border-radius: 14px;
+      border: 1px solid rgba(82, 138, 255, 0.25);
+      background: rgba(8, 18, 36, 0.82);
+      color: var(--text);
+      cursor: pointer;
     }
 
     .hero {
       position: relative;
-      padding: 46px 0 84px;
-      text-align: center;
+      padding: 42px 0 54px;
       overflow: hidden;
     }
 
-    .hero-logo {
-      display: block;
-      width: min(760px, 86vw);
-      margin: 0 auto 8px auto;
-      object-fit: contain;
-      filter:
-        drop-shadow(0 0 28px rgba(52, 136, 255, 0.34))
-        drop-shadow(0 0 68px rgba(52, 136, 255, 0.16));
+    .hero::before {
+      content: "";
+      position: absolute;
+      left: 50%;
+      top: 110px;
+      transform: translateX(-50%);
+      width: min(1100px, 92vw);
+      height: 760px;
+      background:
+        radial-gradient(circle at 50% 30%, rgba(74, 139, 255, 0.18), transparent 30%),
+        radial-gradient(circle at 50% 50%, rgba(74, 139, 255, 0.12), transparent 46%);
+      filter: blur(12px);
+      pointer-events: none;
+      z-index: 0;
     }
 
-    .hero-kicker {
-      margin: 0;
-      color: #4fa3ff;
-      font-size: 19px;
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1fr minmax(720px, 880px) 1fr;
+      align-items: start;
+      gap: 28px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .side-panel {
+      min-height: 680px;
+      position: relative;
+      opacity: 0.88;
+    }
+
+    .code-block,
+    .flow-block {
+      position: sticky;
+      top: 116px;
+      color: rgba(115, 175, 255, 0.72);
+      font-family: "JetBrains Mono", "Fira Code", Consolas, monospace;
+      font-size: 0.95rem;
+      line-height: 1.8;
+      white-space: pre;
+      text-shadow: 0 0 14px rgba(51, 118, 255, 0.18);
+    }
+
+    .left-code {
+      padding-top: 74px;
+      padding-left: 18px;
+    }
+
+    .left-code .comment {
+      color: rgba(110, 147, 205, 0.5);
+    }
+
+    .right-stack {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 18px;
+      padding-top: 148px;
+      padding-right: 10px;
+    }
+
+    .stack-steps {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      width: 156px;
+      margin-left: auto;
+    }
+
+    .stack-box {
+      min-height: 58px;
+      border-radius: 12px;
+      border: 1px solid rgba(82, 138, 255, 0.24);
+      background: linear-gradient(180deg, rgba(8, 18, 38, 0.78), rgba(6, 13, 29, 0.9));
+      box-shadow: inset 0 0 0 1px rgba(83, 144, 255, 0.08);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: "JetBrains Mono", "Fira Code", Consolas, monospace;
+      font-size: 0.95rem;
       font-weight: 700;
-      letter-spacing: 0.16em;
+      color: rgba(116, 187, 255, 0.92);
+      letter-spacing: 0.08em;
       text-transform: uppercase;
+      position: relative;
     }
 
-    .hero h1 {
-      margin: 14px 0 0;
-      font-size: 68px;
-      line-height: 1.04;
+    .stack-box:not(:last-child)::after {
+      content: "↓";
+      position: absolute;
+      bottom: -19px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 18px;
+      color: rgba(103, 162, 255, 0.8);
+    }
+
+    .hero-main {
+      max-width: 880px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 2;
+    }
+
+    .hero-stage {
+      position: relative;
+      border-radius: 34px;
+      padding: 16px 10px 0;
+      overflow: hidden;
+    }
+
+    .hero-stage::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at 50% 34%, rgba(113, 210, 255, 0.18), transparent 12%),
+        radial-gradient(circle at 50% 40%, rgba(72, 132, 255, 0.14), transparent 26%),
+        radial-gradient(circle at 50% 50%, rgba(36, 84, 175, 0.08), transparent 38%);
+      pointer-events: none;
+    }
+
+    .eyebrow {
+      display: inline-block;
+      font-size: 0.8rem;
       font-weight: 800;
-      letter-spacing: -0.03em;
-      color: white;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: #5e9dff;
+      margin-bottom: 14px;
     }
 
-    .hero h1 .accent {
-      color: #3d8bff;
-      text-shadow: 0 0 20px rgba(61, 139, 255, 0.22);
+    .hero-logo-wrap {
+      position: relative;
+      width: min(620px, 94%);
+      margin: 0 auto 8px;
+      aspect-ratio: 1 / 0.92;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
-    .hero-subheadline {
-      margin: 10px auto 0;
-      font-size: 31px;
-      color: #dde9f9;
-      max-width: 900px;
+    .hero-logo-wrap::before {
+      content: "";
+      position: absolute;
+      inset: 7% 10%;
+      border-radius: 50%;
+      background:
+        radial-gradient(circle at center, rgba(126, 211, 255, 0.18), rgba(72, 120, 255, 0.07) 42%, transparent 64%);
+      filter: blur(8px);
     }
 
-    .hero-description {
-      margin: 16px auto 0;
-      max-width: 820px;
-      font-size: 22px;
-      color: #b3c7e0;
+    .hero-logo-wrap::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at center, rgba(97, 173, 255, 0.1), transparent 60%);
+      filter: blur(24px);
+      pointer-events: none;
     }
 
-    .hero-buttons {
-      margin-top: 34px;
+    .hero-logo-core {
+      width: 100%;
+      max-width: 580px;
+      position: relative;
+      display: grid;
+      place-items: center;
+      z-index: 1;
+    }
+
+    .hero-symbol {
+      width: 260px;
+      height: 260px;
+      position: relative;
+      margin: 0 auto 22px;
+      filter: drop-shadow(0 0 32px rgba(98, 180, 255, 0.42));
+    }
+
+    .hero-symbol .arc-left,
+    .hero-symbol .arc-right,
+    .hero-symbol .inner-swoop {
+      position: absolute;
+      display: block;
+      border-radius: 999px;
+    }
+
+    .hero-symbol .arc-left,
+    .hero-symbol .arc-right {
+      width: 84px;
+      height: 220px;
+      top: 10px;
+      background: linear-gradient(180deg, #b6f6ff 0%, #7ad0ff 35%, #5ea5ff 70%, #83e7ff 100%);
+      box-shadow: 0 0 28px rgba(110, 214, 255, 0.36), inset 0 0 10px rgba(255, 255, 255, 0.28);
+    }
+
+    .hero-symbol .arc-left {
+      left: 38px;
+      transform: rotate(24deg);
+      transform-origin: center;
+    }
+
+    .hero-symbol .arc-right {
+      right: 38px;
+      transform: rotate(-24deg);
+      transform-origin: center;
+    }
+
+    .hero-symbol .inner-swoop {
+      width: 126px;
+      height: 76px;
+      left: 67px;
+      bottom: 45px;
+      border: 18px solid transparent;
+      border-top: 0;
+      border-right: 0;
+      border-left-color: rgba(89, 173, 255, 0.96);
+      border-bottom-color: rgba(66, 123, 255, 0.96);
+      transform: rotate(-35deg);
+      box-shadow: 0 0 20px rgba(73, 144, 255, 0.22);
+      filter: drop-shadow(0 0 12px rgba(74, 138, 255, 0.25));
+    }
+
+    .hero-orbit {
+      position: absolute;
+      width: 520px;
+      height: 520px;
+      border-radius: 50%;
+      border: 1px solid rgba(110, 180, 255, 0.09);
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    .hero-orbit::before {
+      content: "";
+      position: absolute;
+      inset: 49% 4% auto 4%;
+      height: 2px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, transparent 0%, rgba(175, 240, 255, 0.95) 38%, rgba(104, 172, 255, 0.65) 62%, transparent 100%);
+      transform: rotate(-22deg);
+      box-shadow: 0 0 20px rgba(109, 185, 255, 0.35);
+    }
+
+    .particle-field {
+      position: absolute;
+      inset: 0;
+      background-image:
+        radial-gradient(circle at 50% 50%, rgba(113, 202, 255, 0.26) 0, transparent 3px),
+        radial-gradient(circle at 12% 20%, rgba(98, 175, 255, 0.48) 0, transparent 2px),
+        radial-gradient(circle at 82% 16%, rgba(98, 175, 255, 0.38) 0, transparent 2px),
+        radial-gradient(circle at 19% 78%, rgba(98, 175, 255, 0.3) 0, transparent 2px),
+        radial-gradient(circle at 86% 74%, rgba(98, 175, 255, 0.28) 0, transparent 2px),
+        radial-gradient(circle at 44% 82%, rgba(98, 175, 255, 0.25) 0, transparent 2px);
+      filter: blur(0.3px);
+      opacity: 0.9;
+    }
+
+    .hero-wordmark {
+      text-align: center;
+      position: relative;
+      z-index: 2;
+    }
+
+    .hero-wordmark .aisyn {
+      font-size: clamp(4rem, 9vw, 6.25rem);
+      line-height: 0.95;
+      font-weight: 800;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: #85d8ff;
+      text-shadow:
+        0 0 18px rgba(124, 223, 255, 0.44),
+        0 0 32px rgba(76, 137, 255, 0.22);
+      margin: 0 0 10px;
+      padding-left: 0.28em;
+    }
+
+    .hero-wordmark .systems {
+      font-size: clamp(1.45rem, 2.9vw, 2.2rem);
+      font-weight: 700;
+      letter-spacing: 0.72em;
+      text-transform: uppercase;
+      color: rgba(221, 236, 255, 0.94);
+      margin: 0;
+      padding-left: 0.72em;
+    }
+
+    .hero-copy {
+      max-width: 770px;
+      margin: 20px auto 0;
+      text-align: center;
+    }
+
+    .hero-copy h1 {
+      margin: 0;
+      font-size: clamp(2.4rem, 5vw, 4rem);
+      line-height: 1.08;
+      letter-spacing: -0.04em;
+      font-weight: 800;
+    }
+
+    .hero-copy h1 .accent {
+      color: #4e8cff;
+      text-shadow: 0 0 20px rgba(85, 146, 255, 0.28);
+    }
+
+    .hero-copy .subhead {
+      margin: 14px 0 0;
+      font-size: clamp(1.1rem, 1.9vw, 1.42rem);
+      color: rgba(235, 243, 255, 0.92);
+      font-weight: 500;
+    }
+
+    .hero-copy .description {
+      margin: 18px auto 0;
+      max-width: 720px;
+      color: var(--muted);
+      font-size: 1.12rem;
+      line-height: 1.75;
+    }
+
+    .hero-actions {
       display: flex;
       justify-content: center;
-      flex-wrap: wrap;
       gap: 16px;
+      margin-top: 34px;
+      flex-wrap: wrap;
     }
 
     .btn {
+      min-width: 228px;
+      height: 62px;
+      padding: 0 28px;
+      border-radius: 16px;
+      border: 1px solid transparent;
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      gap: 10px;
-      min-width: 212px;
-      padding: 16px 24px;
-      border-radius: 14px;
-      border: 1px solid transparent;
-      font-size: 16px;
-      font-weight: 700;
+      gap: 12px;
       cursor: pointer;
-      transition: transform 0.18s ease, box-shadow 0.18s ease;
-    }
-
-    .btn:hover {
-      transform: translateY(-1px);
+      font-weight: 700;
+      font-size: 1rem;
+      transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+      text-decoration: none;
     }
 
     .btn-primary {
-      background: linear-gradient(135deg, #1b4cff, #2c6cff 55%, #4f55ff);
       color: white;
-      box-shadow: 0 0 32px rgba(50, 100, 255, 0.24);
+      background: linear-gradient(90deg, #0d4eff 0%, #245dff 55%, #6d3fff 100%);
+      border-color: rgba(116, 161, 255, 0.3);
+      box-shadow: 0 12px 34px rgba(36, 93, 255, 0.28), inset 0 0 0 1px rgba(156, 191, 255, 0.14);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 16px 42px rgba(36, 93, 255, 0.34), inset 0 0 0 1px rgba(176, 204, 255, 0.18);
     }
 
     .btn-secondary {
-      background: rgba(7, 16, 32, 0.82);
-      color: white;
-      border-color: rgba(108, 148, 255, 0.18);
+      color: #edf3ff;
+      background: linear-gradient(180deg, rgba(10, 18, 34, 0.88), rgba(7, 12, 24, 0.94));
+      border-color: rgba(103, 151, 255, 0.22);
+      box-shadow: inset 0 0 0 1px rgba(111, 168, 255, 0.08);
+    }
+
+    .btn-secondary:hover {
+      transform: translateY(-2px);
+      border-color: rgba(123, 174, 255, 0.35);
+      box-shadow: inset 0 0 0 1px rgba(111, 168, 255, 0.12), 0 10px 28px rgba(0, 0, 0, 0.22);
     }
 
     .feature-strip {
-      margin-top: 46px;
+      margin: 46px auto 0;
       display: grid;
       grid-template-columns: repeat(4, 1fr);
-      background: rgba(6, 14, 28, 0.84);
-      border: 1px solid rgba(90, 130, 255, 0.16);
-      border-radius: 18px;
+      border-radius: 22px;
       overflow: hidden;
-      box-shadow: var(--shadow);
+      background: linear-gradient(180deg, rgba(7, 16, 32, 0.84), rgba(4, 11, 22, 0.94));
+      border: 1px solid rgba(78, 134, 255, 0.18);
+      box-shadow: var(--shadow-soft);
+      position: relative;
+    }
+
+    .feature-strip::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(90deg, rgba(60, 124, 255, 0.04), transparent 20%, transparent 80%, rgba(129, 100, 255, 0.04)),
+        linear-gradient(180deg, rgba(120, 183, 255, 0.02), transparent 40%);
+      pointer-events: none;
     }
 
     .feature-item {
-      padding: 24px 24px 20px;
-      border-right: 1px solid rgba(90, 130, 255, 0.1);
+      padding: 26px 24px 24px;
+      display: flex;
+      gap: 16px;
+      align-items: flex-start;
+      position: relative;
     }
 
-    .feature-item:last-child {
-      border-right: none;
+    .feature-item:not(:last-child) {
+      border-right: 1px solid rgba(88, 144, 255, 0.14);
+    }
+
+    .feature-icon {
+      width: 58px;
+      height: 58px;
+      border-radius: 16px;
+      display: grid;
+      place-items: center;
+      color: #5f9fff;
+      font-size: 1.65rem;
+      font-weight: 700;
+      background: linear-gradient(180deg, rgba(19, 35, 70, 0.8), rgba(9, 18, 36, 0.9));
+      border: 1px solid rgba(101, 156, 255, 0.16);
+      box-shadow: inset 0 0 0 1px rgba(112, 174, 255, 0.08);
+      flex-shrink: 0;
     }
 
     .feature-item h3 {
-      margin: 0 0 6px;
-      font-size: 24px;
-      color: #edf5ff;
+      margin: 2px 0 8px;
+      font-size: 1.16rem;
+      line-height: 1.2;
     }
 
     .feature-item p {
       margin: 0;
-      font-size: 14px;
-      color: #a6b9d3;
+      color: var(--muted);
+      line-height: 1.6;
+      font-size: 0.98rem;
     }
 
     .section {
+      padding: 42px 0 10px;
       position: relative;
-      padding: 78px 0;
-      border-top: 1px solid rgba(90, 130, 255, 0.08);
     }
 
-    .section-label {
-      margin: 0 0 8px;
-      color: #4ca0ff;
-      font-size: 13px;
-      font-weight: 700;
-      letter-spacing: 0.16em;
-      text-transform: uppercase;
+    .section-header {
+      margin-bottom: 28px;
     }
 
-    .section h2 {
+    .section-header h2 {
       margin: 0;
-      font-size: 48px;
+      font-size: clamp(2rem, 3.8vw, 3rem);
       line-height: 1.08;
-      color: #eef5ff;
+      letter-spacing: -0.04em;
     }
 
-    .section-subtext {
+    .section-header p {
       margin: 14px 0 0;
-      max-width: 860px;
-      font-size: 20px;
-      color: #aec2dd;
+      max-width: 760px;
+      color: var(--muted);
+      font-size: 1.08rem;
+      line-height: 1.75;
     }
 
-    .pipeline-grid {
-      margin-top: 34px;
+    .pipeline-row {
       display: grid;
-      grid-template-columns: repeat(8, minmax(0, 1fr));
+      grid-template-columns: repeat(8, 1fr);
       gap: 18px;
+      align-items: stretch;
     }
 
     .pipeline-card {
-      position: relative;
-      min-height: 208px;
-      padding: 22px 18px;
+      min-height: 192px;
       border-radius: 18px;
-      background: rgba(7, 16, 32, 0.86);
-      border: 1px solid rgba(90, 130, 255, 0.18);
-      box-shadow: var(--shadow);
+      padding: 22px 18px 18px;
+      background: linear-gradient(180deg, rgba(9, 18, 36, 0.9), rgba(5, 12, 24, 0.94));
+      border: 1px solid rgba(82, 138, 255, 0.18);
+      box-shadow: var(--shadow-soft);
+      position: relative;
+      overflow: hidden;
     }
 
-    .pipeline-card::after {
+    .pipeline-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(85, 145, 255, 0.04), transparent 38%);
+      pointer-events: none;
+    }
+
+    .pipeline-card:not(:last-child)::after {
       content: "→";
       position: absolute;
-      right: -14px;
+      right: -15px;
       top: 50%;
       transform: translateY(-50%);
-      font-size: 28px;
-      color: rgba(139, 172, 255, 0.68);
-      font-weight: 700;
-    }
-
-    .pipeline-card:last-child::after {
-      display: none;
+      color: rgba(102, 163, 255, 0.9);
+      font-size: 1.7rem;
+      z-index: 3;
     }
 
     .pipeline-icon {
       width: 58px;
       height: 58px;
-      border-radius: 14px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      border-radius: 16px;
+      display: grid;
+      place-items: center;
       margin-bottom: 18px;
-      font-size: 30px;
-      color: #6aaeff;
-      border: 1px solid rgba(90, 130, 255, 0.16);
-      background: rgba(10, 20, 40, 0.58);
-    }
-
-    .pipeline-card.purple .pipeline-icon {
-      color: #9b62ff;
+      font-size: 1.45rem;
+      color: #7ab8ff;
+      background: linear-gradient(180deg, rgba(22, 38, 77, 0.86), rgba(10, 17, 34, 0.94));
+      border: 1px solid rgba(100, 157, 255, 0.18);
     }
 
     .pipeline-card h3 {
       margin: 0 0 10px;
-      font-size: 21px;
-      color: #eef5ff;
+      font-size: 1.02rem;
+      line-height: 1.25;
     }
 
     .pipeline-card p {
       margin: 0;
-      color: #a6b9d3;
-      font-size: 14px;
+      font-size: 0.95rem;
+      color: var(--muted);
+      line-height: 1.6;
     }
 
-    .split-grid {
-      margin-top: 34px;
+    .builder-grid {
       display: grid;
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: repeat(2, 1fr);
       gap: 26px;
+      position: relative;
     }
 
-    .split-card {
-      padding: 30px 28px;
-      border-radius: 20px;
-      background: rgba(7, 16, 32, 0.86);
-      border: 1px solid rgba(90, 130, 255, 0.18);
-      box-shadow: var(--shadow);
+    .builder-card {
+      min-height: 265px;
+      border-radius: 22px;
+      padding: 28px 28px 24px;
+      position: relative;
+      overflow: hidden;
+      box-shadow: var(--shadow-soft);
     }
 
-    .split-card.devs {
-      box-shadow:
-        inset 0 0 0 1px rgba(58, 139, 255, 0.12),
-        0 0 36px rgba(36, 102, 255, 0.09);
+    .builder-card.dev {
+      background:
+        linear-gradient(180deg, rgba(7, 20, 42, 0.96), rgba(4, 12, 24, 0.98));
+      border: 1px solid rgba(79, 145, 255, 0.26);
     }
 
-    .split-card.companies {
-      box-shadow:
-        inset 0 0 0 1px rgba(124, 77, 255, 0.10),
-        0 0 36px rgba(124, 77, 255, 0.08);
+    .builder-card.company {
+      background:
+        linear-gradient(180deg, rgba(18, 13, 46, 0.96), rgba(7, 10, 28, 0.98));
+      border: 1px solid rgba(137, 95, 255, 0.28);
     }
 
-    .split-card h3 {
-      margin: 0 0 16px;
-      font-size: 34px;
+    .builder-card::before {
+      content: "";
+      position: absolute;
+      top: -40px;
+      right: -40px;
+      width: 180px;
+      height: 180px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(96, 155, 255, 0.12), transparent 68%);
+      pointer-events: none;
     }
 
-    .split-card ul {
+    .builder-card.company::before {
+      background: radial-gradient(circle, rgba(143, 91, 255, 0.16), transparent 68%);
+    }
+
+    .builder-card h3 {
       margin: 0;
-      padding-left: 22px;
-      color: #b5c8e2;
-      font-size: 17px;
+      font-size: 1.75rem;
+      line-height: 1.15;
     }
 
-    .split-card li {
-      margin-bottom: 12px;
-    }
-
-    .waitlist-layout {
-      margin-top: 34px;
+    .builder-card ul {
+      margin: 22px 0 0;
+      padding: 0;
+      list-style: none;
       display: grid;
-      grid-template-columns: 1.05fr 1fr;
-      gap: 28px;
+      gap: 14px;
+    }
+
+    .builder-card li {
+      color: #d7e4ff;
+      line-height: 1.55;
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      font-size: 1rem;
+    }
+
+    .builder-card li::before {
+      content: "✓";
+      color: #71b1ff;
+      font-weight: 900;
+      margin-top: 1px;
+    }
+
+    .simple-copy {
+      padding-top: 18px;
+      padding-bottom: 0;
+    }
+
+    .simple-copy .copy-block {
+      max-width: 860px;
+    }
+
+    .simple-copy h2 {
+      margin: 0 0 10px;
+      font-size: clamp(2rem, 3.2vw, 2.9rem);
+      line-height: 1.1;
+      letter-spacing: -0.04em;
+    }
+
+    .simple-copy p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 1.08rem;
+      line-height: 1.75;
+    }
+
+    .waitlist-section {
+      padding-top: 54px;
+      padding-bottom: 64px;
+    }
+
+    .waitlist-grid {
+      display: grid;
+      grid-template-columns: 1.05fr 1.15fr 0.92fr;
+      gap: 24px;
       align-items: stretch;
     }
 
     .waitlist-info,
-    .waitlist-form-wrap {
-      padding: 30px;
-      border-radius: 22px;
-      background: rgba(7, 16, 32, 0.88);
-      border: 1px solid rgba(90, 130, 255, 0.18);
-      box-shadow: var(--shadow);
+    .waitlist-form-card,
+    .waitlist-status {
+      border-radius: 24px;
+      border: 1px solid rgba(83, 144, 255, 0.18);
+      background: linear-gradient(180deg, rgba(7, 15, 30, 0.92), rgba(4, 9, 20, 0.98));
+      box-shadow: var(--shadow-soft);
+      position: relative;
+      overflow: hidden;
     }
 
-    .waitlist-info h3,
-    .waitlist-form-wrap h3 {
+    .waitlist-info,
+    .waitlist-form-card {
+      padding: 28px;
+    }
+
+    .waitlist-info::before,
+    .waitlist-form-card::before,
+    .waitlist-status::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(88, 146, 255, 0.04), transparent 40%);
+      pointer-events: none;
+    }
+
+    .waitlist-info h2 {
       margin: 0 0 14px;
-      font-size: 44px;
-      line-height: 1.06;
+      font-size: clamp(2rem, 3vw, 2.8rem);
+      line-height: 1.05;
+      letter-spacing: -0.04em;
     }
 
-    .waitlist-info h3 .accent {
-      color: #3d8bff;
+    .waitlist-info h2 .accent {
+      color: #4b8cff;
     }
 
     .waitlist-info p {
-      margin: 0 0 20px;
-      color: #b4c7e1;
-      font-size: 19px;
+      margin: 0 0 28px;
+      color: var(--muted);
+      font-size: 1.05rem;
+      line-height: 1.8;
     }
 
-    .waitlist-points {
-      margin-top: 24px;
-      padding-top: 22px;
-      border-top: 1px solid rgba(90, 130, 255, 0.1);
+    .waitlist-meta {
       display: grid;
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: repeat(2, 1fr);
       gap: 18px;
+      margin-top: 28px;
+      padding-top: 24px;
+      border-top: 1px solid rgba(93, 148, 255, 0.14);
     }
 
-    .waitlist-point {
-      color: #a9bdd8;
-      font-size: 14px;
+    .meta-item {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
     }
 
-    .waitlist-point strong {
+    .meta-icon {
+      width: 42px;
+      height: 42px;
+      border-radius: 14px;
+      display: grid;
+      place-items: center;
+      background: linear-gradient(180deg, rgba(18, 33, 64, 0.88), rgba(9, 16, 30, 0.94));
+      color: #72b2ff;
+      border: 1px solid rgba(96, 150, 255, 0.14);
+      flex-shrink: 0;
+    }
+
+    .meta-item strong {
       display: block;
       margin-bottom: 4px;
-      color: #eef5ff;
-      font-size: 17px;
+      font-size: 1rem;
     }
 
-    .waitlist-form {
+    .meta-item span {
+      color: var(--muted);
+      font-size: 0.95rem;
+      line-height: 1.5;
+    }
+
+    .waitlist-form-card form {
       display: grid;
       gap: 14px;
-      margin-top: 10px;
     }
 
-    .waitlist-form input,
-    .waitlist-form select,
-    .waitlist-form textarea {
+    .field {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .field label {
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: rgba(224, 235, 255, 0.92);
+    }
+
+    .field input,
+    .field select,
+    .field textarea {
       width: 100%;
-      padding: 15px 16px;
+      border: 1px solid rgba(87, 145, 255, 0.2);
+      background: rgba(5, 11, 22, 0.88);
+      color: var(--text);
       border-radius: 14px;
-      border: 1px solid rgba(90, 130, 255, 0.18);
-      background: rgba(4, 10, 22, 0.88);
-      color: white;
-      font-size: 15px;
+      padding: 15px 16px;
       outline: none;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
     }
 
-    .waitlist-form input:focus,
-    .waitlist-form select:focus,
-    .waitlist-form textarea:focus {
-      border-color: rgba(72, 146, 255, 0.7);
-      box-shadow: 0 0 0 3px rgba(61, 139, 255, 0.12);
-    }
-
-    .waitlist-form textarea {
-      min-height: 118px;
+    .field textarea {
+      min-height: 132px;
       resize: vertical;
     }
 
-    .waitlist-submit {
-      width: 100%;
-      margin-top: 2px;
+    .field input:focus,
+    .field select:focus,
+    .field textarea:focus {
+      border-color: rgba(106, 165, 255, 0.48);
+      box-shadow: 0 0 0 3px rgba(58, 117, 255, 0.16);
+      background: rgba(7, 14, 26, 0.96);
     }
 
-    .fine-print {
-      margin-top: 16px;
-      color: #91a7c2;
-      font-size: 13px;
+    .waitlist-submit {
+      margin-top: 6px;
+      width: 100%;
+      height: 60px;
+      border-radius: 16px;
+      border: 1px solid rgba(108, 161, 255, 0.24);
+      background: linear-gradient(90deg, #0e4eff 0%, #245dff 55%, #6d3fff 100%);
+      color: white;
+      font-weight: 800;
+      font-size: 1rem;
+      cursor: pointer;
+      box-shadow: 0 14px 36px rgba(37, 93, 255, 0.24);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .waitlist-submit:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 18px 40px rgba(37, 93, 255, 0.28);
+    }
+
+    .form-note {
+      margin-top: 10px;
+      color: var(--soft);
+      font-size: 0.84rem;
+      line-height: 1.5;
+    }
+
+    .waitlist-status {
+      padding: 22px 22px 24px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      min-height: 100%;
+    }
+
+    .status-close {
+      align-self: flex-end;
+      width: 34px;
+      height: 34px;
+      border-radius: 999px;
+      border: 1px solid rgba(101, 155, 255, 0.2);
+      background: rgba(8, 16, 30, 0.82);
+      color: rgba(237, 244, 255, 0.92);
+      font-size: 1.3rem;
+      line-height: 1;
+      cursor: pointer;
+    }
+
+    .status-visual {
+      width: 100%;
+      aspect-ratio: 1 / 1.05;
+      border-radius: 26px;
+      margin-top: 8px;
+      background:
+        radial-gradient(circle at 50% 40%, rgba(126, 211, 255, 0.16), transparent 20%),
+        linear-gradient(180deg, rgba(8, 18, 36, 0.92), rgba(4, 10, 22, 0.98));
+      border: 1px solid rgba(88, 145, 255, 0.18);
+      position: relative;
+      display: grid;
+      place-items: center;
+      overflow: hidden;
+    }
+
+    .status-visual .mini-orbit {
+      position: absolute;
+      width: 90%;
+      height: 90%;
+      border-radius: 50%;
+      border: 1px solid rgba(108, 176, 255, 0.08);
+    }
+
+    .status-visual .mini-orbit::before {
+      content: "";
+      position: absolute;
+      inset: 49% 4% auto 4%;
+      height: 2px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, transparent 0%, rgba(180, 239, 255, 0.9) 42%, rgba(88, 152, 255, 0.75) 60%, transparent 100%);
+      transform: rotate(-24deg);
+    }
+
+    .mini-symbol {
+      width: 138px;
+      height: 138px;
+      position: relative;
+      filter: drop-shadow(0 0 18px rgba(88, 155, 255, 0.34));
+    }
+
+    .mini-symbol span {
+      position: absolute;
+      display: block;
+      border-radius: 999px;
+    }
+
+    .mini-symbol .l,
+    .mini-symbol .r {
+      width: 44px;
+      height: 122px;
+      top: 2px;
+      background: linear-gradient(180deg, #b6f6ff 0%, #7ad0ff 35%, #5ea5ff 70%, #83e7ff 100%);
+      box-shadow: 0 0 18px rgba(110, 214, 255, 0.3);
+    }
+
+    .mini-symbol .l {
+      left: 20px;
+      transform: rotate(24deg);
+    }
+
+    .mini-symbol .r {
+      right: 20px;
+      transform: rotate(-24deg);
+    }
+
+    .mini-symbol .s {
+      width: 74px;
+      height: 45px;
+      left: 34px;
+      bottom: 22px;
+      border: 12px solid transparent;
+      border-top: 0;
+      border-right: 0;
+      border-left-color: rgba(89, 173, 255, 0.96);
+      border-bottom-color: rgba(66, 123, 255, 0.96);
+      transform: rotate(-35deg);
+    }
+
+    .waitlist-status h3 {
+      margin: 22px 0 10px;
+      font-size: 2rem;
+      line-height: 1.04;
+      letter-spacing: -0.04em;
+      text-align: center;
+    }
+
+    .waitlist-status p {
+      margin: 0;
+      text-align: center;
+      color: var(--muted);
+      line-height: 1.8;
+      font-size: 1.02rem;
+    }
+
+    .status-button {
+      margin-top: 24px;
+      width: 100%;
+      height: 58px;
+      border-radius: 16px;
+      border: 1px solid rgba(101, 159, 255, 0.22);
+      background: linear-gradient(90deg, #0d4eff 0%, #245dff 55%, #6d3fff 100%);
+      color: white;
+      font-weight: 800;
+      cursor: pointer;
+      font-size: 1rem;
     }
 
     .footer {
-      padding: 30px 0 44px;
-      border-top: 1px solid rgba(90, 130, 255, 0.08);
+      padding: 28px 0 46px;
+      border-top: 1px solid rgba(80, 133, 255, 0.1);
+      margin-top: 10px;
     }
 
     .footer-inner {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 18px;
-      color: #91a7c2;
-      font-size: 14px;
+      gap: 24px;
+      flex-wrap: wrap;
     }
 
-    .footer-brand {
+    .footer-copy {
+      color: var(--muted);
+      font-size: 0.96rem;
+    }
+
+    .footer-socials {
       display: flex;
+      gap: 16px;
       align-items: center;
-      gap: 12px;
-      color: white;
-      font-size: 14px;
+    }
+
+    .footer-socials a {
+      width: 42px;
+      height: 42px;
+      border-radius: 14px;
+      display: grid;
+      place-items: center;
+      border: 1px solid rgba(89, 145, 255, 0.18);
+      background: rgba(6, 13, 24, 0.88);
+      color: #dce8ff;
       font-weight: 700;
-      letter-spacing: 0.16em;
-      text-transform: uppercase;
+      transition: transform 0.2s ease, border-color 0.2s ease;
     }
 
-    .footer-brand img {
-      width: 34px;
-      height: 34px;
-      object-fit: contain;
-      filter: drop-shadow(0 0 12px rgba(58, 139, 255, 0.3));
+    .footer-socials a:hover {
+      transform: translateY(-2px);
+      border-color: rgba(119, 171, 255, 0.34);
     }
 
-    .footer-icons {
-      display: flex;
-      align-items: center;
-      gap: 18px;
-      font-size: 24px;
-      color: #d5e5ff;
-    }
-
-    .footer-icons span {
-      opacity: 0.86;
-    }
-
-    .success-modal {
+    .modal-backdrop {
       position: fixed;
       inset: 0;
-      z-index: 9999;
+      background: rgba(2, 7, 16, 0.72);
+      backdrop-filter: blur(10px);
       display: none;
       align-items: center;
       justify-content: center;
       padding: 24px;
-      background: rgba(1, 5, 12, 0.82);
-      backdrop-filter: blur(12px);
+      z-index: 100;
     }
 
-    .success-modal.show {
+    .modal-backdrop.active {
       display: flex;
     }
 
-    .success-modal-card {
+    .modal-card {
+      width: min(540px, 100%);
+      border-radius: 28px;
+      border: 1px solid rgba(95, 149, 255, 0.2);
+      background: linear-gradient(180deg, rgba(7, 15, 30, 0.98), rgba(4, 9, 20, 0.98));
+      box-shadow: 0 24px 90px rgba(0, 0, 0, 0.6);
+      padding: 24px 24px 26px;
       position: relative;
-      width: 100%;
-      max-width: 440px;
-      padding: 30px 26px 26px;
-      border-radius: 24px;
-      background:
-        radial-gradient(circle at top, rgba(50, 120, 255, 0.22), transparent 40%),
-        rgba(7, 16, 32, 0.96);
-      border: 1px solid rgba(90, 130, 255, 0.2);
-      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.45);
-      text-align: center;
+      overflow: hidden;
     }
 
-    .success-close {
+    .modal-card::before {
+      content: "";
       position: absolute;
-      top: 12px;
-      right: 14px;
-      background: transparent;
-      border: none;
-      color: #ecf5ff;
-      font-size: 30px;
-      line-height: 1;
-      cursor: pointer;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(88, 146, 255, 0.06), transparent 42%);
+      pointer-events: none;
     }
 
-    .success-modal-logo {
-      display: block;
-      width: 170px;
-      max-width: 64%;
-      margin: 0 auto 14px auto;
-      object-fit: contain;
-      filter:
-        drop-shadow(0 0 22px rgba(52, 136, 255, 0.34))
-        drop-shadow(0 0 48px rgba(52, 136, 255, 0.18));
-    }
-
-    .success-modal-card h3 {
-      margin: 0 0 10px;
-      font-size: 38px;
-      line-height: 1.08;
+    .modal-close {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      width: 38px;
+      height: 38px;
+      border-radius: 999px;
+      border: 1px solid rgba(100, 156, 255, 0.2);
+      background: rgba(9, 18, 34, 0.9);
       color: white;
+      cursor: pointer;
+      font-size: 1.3rem;
     }
 
-    .success-modal-card p {
-      margin: 0 0 22px;
-      color: #bfd3ea;
-      font-size: 18px;
+    .modal-card .status-visual {
+      max-width: 280px;
+      margin: 10px auto 0;
     }
 
-    @keyframes floatCode {
-      0%, 100% {
-        transform: translateY(0);
-        opacity: 0.72;
+    .modal-card h3 {
+      margin: 20px 0 8px;
+      text-align: center;
+      font-size: 2rem;
+      line-height: 1.05;
+      letter-spacing: -0.04em;
+    }
+
+    .modal-card p {
+      margin: 0 auto;
+      max-width: 410px;
+      text-align: center;
+      color: var(--muted);
+      font-size: 1.02rem;
+      line-height: 1.75;
+    }
+
+    .modal-card .status-button {
+      max-width: 260px;
+      margin: 24px auto 0;
+      display: block;
+    }
+
+    @media (max-width: 1480px) {
+      .hero-grid {
+        grid-template-columns: 180px minmax(720px, 1fr) 180px;
       }
-      50% {
-        transform: translateY(-10px);
-        opacity: 0.96;
+
+      .left-code {
+        font-size: 0.86rem;
+      }
+
+      .stack-steps {
+        width: 140px;
+      }
+
+      .stack-box {
+        min-height: 54px;
+        font-size: 0.85rem;
       }
     }
 
-    @keyframes driftLeft {
-      0%, 100% {
-        transform: translateX(0) rotate(8deg);
-        opacity: 0.35;
-      }
-      50% {
-        transform: translateX(48px) rotate(10deg);
-        opacity: 0.95;
-      }
-    }
-
-    @keyframes driftRight {
-      0%, 100% {
-        transform: translateX(0) rotate(-10deg);
-        opacity: 0.3;
-      }
-      50% {
-        transform: translateX(-50px) rotate(-8deg);
-        opacity: 0.92;
-      }
-    }
-
-    @media (max-width: 1200px) {
-      .pipeline-grid {
-        grid-template-columns: repeat(4, minmax(0, 1fr));
+    @media (max-width: 1260px) {
+      .hero-grid {
+        grid-template-columns: 1fr;
       }
 
-      .pipeline-card:nth-child(4)::after {
-        display: none;
-      }
-    }
-
-    @media (max-width: 980px) {
-      .nav {
-        flex-wrap: wrap;
-      }
-
-      .nav-links {
-        order: 3;
-        width: 100%;
-        justify-content: center;
-        flex-wrap: wrap;
-      }
-
-      .stack-rail,
-      .code-block {
+      .side-panel {
         display: none;
       }
 
+      .hero-main {
+        max-width: 980px;
+      }
+
+      .pipeline-row {
+        grid-template-columns: repeat(4, 1fr);
+      }
+
+      .pipeline-card:nth-child(4)::after,
+      .pipeline-card:last-child::after {
+        display: none;
+      }
+
+      .waitlist-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 1080px) {
       .feature-strip {
-        grid-template-columns: 1fr 1fr;
+        grid-template-columns: repeat(2, 1fr);
       }
 
       .feature-item:nth-child(2) {
         border-right: none;
       }
 
-      .feature-item:nth-child(1),
-      .feature-item:nth-child(2) {
-        border-bottom: 1px solid rgba(90, 130, 255, 0.1);
-      }
-
-      .split-grid,
-      .waitlist-layout {
+      .builder-grid {
         grid-template-columns: 1fr;
-      }
-
-      .hero h1 {
-        font-size: 54px;
-      }
-
-      .hero-subheadline {
-        font-size: 25px;
-      }
-
-      .hero-description {
-        font-size: 20px;
       }
     }
 
-    @media (max-width: 760px) {
-      .container {
-        padding: 0 18px;
+    @media (max-width: 860px) {
+      .topbar {
+        height: 78px;
+      }
+
+      .nav {
+        position: fixed;
+        top: 78px;
+        left: 16px;
+        right: 16px;
+        display: none;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 12px;
+        padding: 18px;
+        border-radius: 20px;
+        background: linear-gradient(180deg, rgba(8, 16, 30, 0.96), rgba(4, 10, 22, 0.98));
+        border: 1px solid rgba(84, 140, 255, 0.18);
+        box-shadow: 0 24px 70px rgba(0, 0, 0, 0.52);
+      }
+
+      .nav.open {
+        display: flex;
+      }
+
+      .mobile-toggle {
+        display: inline-grid;
+        place-items: center;
+      }
+
+      .topbar > .nav-cta {
+        display: none;
       }
 
       .hero {
-        padding-top: 40px;
+        padding-top: 28px;
       }
 
-      .hero-logo {
-        width: min(620px, 96vw);
+      .hero-logo-wrap {
+        width: 100%;
       }
 
-      .hero-kicker {
-        font-size: 16px;
+      .hero-symbol {
+        width: 210px;
+        height: 210px;
+        margin-bottom: 16px;
       }
 
-      .hero h1 {
-        font-size: 40px;
+      .hero-symbol .arc-left,
+      .hero-symbol .arc-right {
+        width: 70px;
+        height: 180px;
       }
 
-      .hero-subheadline {
-        font-size: 19px;
+      .hero-symbol .arc-left {
+        left: 30px;
       }
 
-      .hero-description {
-        font-size: 17px;
+      .hero-symbol .arc-right {
+        right: 30px;
       }
 
-      .feature-strip {
+      .hero-symbol .inner-swoop {
+        width: 102px;
+        height: 60px;
+        left: 55px;
+        bottom: 34px;
+        border-width: 15px;
+        border-top: 0;
+        border-right: 0;
+      }
+
+      .hero-orbit {
+        width: 400px;
+        height: 400px;
+      }
+
+      .feature-strip,
+      .pipeline-row {
         grid-template-columns: 1fr;
       }
 
-      .feature-item {
+      .feature-item:not(:last-child),
+      .feature-item:nth-child(2) {
         border-right: none;
-        border-bottom: 1px solid rgba(90, 130, 255, 0.1);
       }
 
-      .feature-item:last-child {
-        border-bottom: none;
-      }
-
-      .pipeline-grid {
-        grid-template-columns: 1fr 1fr;
+      .feature-item:not(:last-child) {
+        border-bottom: 1px solid rgba(88, 144, 255, 0.12);
       }
 
       .pipeline-card::after {
         display: none;
       }
 
-      .section h2 {
-        font-size: 34px;
-      }
-
-      .waitlist-info h3,
-      .waitlist-form-wrap h3 {
-        font-size: 34px;
-      }
-
-      .waitlist-points {
+      .waitlist-meta {
         grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 620px) {
+      .container {
+        width: min(var(--max), calc(100% - 28px));
+      }
+
+      .topbar {
+        width: calc(100% - 28px);
+      }
+
+      .brand-text {
+        font-size: 0.95rem;
+        letter-spacing: 0.18em;
+      }
+
+      .hero-copy .description {
+        font-size: 1rem;
+      }
+
+      .hero-actions .btn {
+        width: 100%;
+        min-width: 0;
+      }
+
+      .feature-item {
+        flex-direction: column;
+      }
+
+      .waitlist-info,
+      .waitlist-form-card,
+      .waitlist-status {
+        padding-left: 18px;
+        padding-right: 18px;
+      }
+
+      .modal-card {
+        padding-left: 18px;
+        padding-right: 18px;
       }
 
       .footer-inner {
         flex-direction: column;
-        text-align: center;
-      }
-    }
-
-    @media (max-width: 520px) {
-      .pipeline-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .nav-button {
-        width: 100%;
-      }
-
-      .brand span {
-        font-size: 16px;
+        align-items: flex-start;
       }
     }
   </style>
 </head>
 <body>
-  <div class="site-bg">
-    <div class="grid-overlay"></div>
-    <div class="hero-floor"></div>
-    <div class="light-trail left"></div>
-    <div class="light-trail right"></div>
+  <div class="page-shell">
+    <div class="ambient-line one"></div>
+    <div class="ambient-line two"></div>
+    <div class="ambient-line three"></div>
 
-    <div class="code-block left">function buildSystem(prompt) {
+    <div class="topbar-wrap">
+      <header class="topbar">
+        <a class="brand" href="#top" aria-label="AISYN Systems home">
+          <div class="brand-mark" aria-hidden="true"></div>
+          <div class="brand-text">AISYN SYSTEMS</div>
+        </a>
+
+        <nav class="nav" id="mobileNav">
+          <a href="#top">Home</a>
+          <a href="#how-it-works">How It Works</a>
+          <a href="#developers">For Developers</a>
+          <a href="#companies">For Companies</a>
+          <a href="#roadmap">Roadmap</a>
+          <a href="#about">About</a>
+          <a class="nav-cta" href="#waitlist">Join Waitlist</a>
+        </nav>
+
+        <a class="nav-cta" href="#waitlist">Join Waitlist</a>
+        <button class="mobile-toggle" id="mobileToggle" aria-label="Open menu">☰</button>
+      </header>
+    </div>
+
+    <main id="top">
+      <section class="hero">
+        <div class="container">
+          <div class="hero-grid">
+            <aside class="side-panel">
+              <div class="code-block left-code">function buildSystem(prompt) {
   let spec = analyze(prompt);
-  let tasks = breakdown(prompt);
+  let tasks = breakdown(spec);
   let code = generate(tasks);
   let fixed = repair(code);
   let valid = validate(fixed);
@@ -900,370 +1536,453 @@
   return output;
 }
 
-// AISYN SYSTEMS
-// Building the future
-// one prompt at a time</div>
+<span class="comment">// AISYN SYSTEMS</span>
+<span class="comment">// Building the future</span>
+<span class="comment">// one prompt at a time</span></div>
+            </aside>
 
-    <div class="code-block right">if (system.ready) {
+            <div class="hero-main">
+              <div class="hero-stage">
+                <div class="hero-logo-wrap">
+                  <div class="particle-field" aria-hidden="true"></div>
+                  <div class="hero-orbit" aria-hidden="true"></div>
+
+                  <div class="hero-logo-core">
+                    <div class="hero-symbol" aria-hidden="true">
+                      <span class="arc-left"></span>
+                      <span class="arc-right"></span>
+                      <span class="inner-swoop"></span>
+                    </div>
+
+                    <div class="hero-wordmark">
+                      <p class="aisyn">AISYN</p>
+                      <p class="systems">SYSTEMS</p>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="hero-copy">
+                  <span class="eyebrow">Autonomous Intelligence System</span>
+                  <h1>Software Creation, <span class="accent">Reimagined.</span></h1>
+                  <p class="subhead">From intent to intelligent execution.</p>
+                  <p class="description">
+                    AISYN is building a system that turns plain instructions into working software through
+                    structured generation, repair, validation, and packaging.
+                  </p>
+
+                  <div class="hero-actions">
+                    <a class="btn btn-primary" href="#waitlist">Join the Waitlist <span aria-hidden="true">→</span></a>
+                    <a class="btn btn-secondary" href="#about">Watch Vision <span aria-hidden="true">▷</span></a>
+                  </div>
+                </div>
+              </div>
+
+              <div class="feature-strip">
+                <div class="feature-item">
+                  <div class="feature-icon">⚡</div>
+                  <div>
+                    <h3>Faster Creation</h3>
+                    <p>Move from idea to working software dramatically faster.</p>
+                  </div>
+                </div>
+
+                <div class="feature-item">
+                  <div class="feature-icon">🛡</div>
+                  <div>
+                    <h3>Built-in Reliability</h3>
+                    <p>Automatic repair and validation ensure higher quality output.</p>
+                  </div>
+                </div>
+
+                <div class="feature-item">
+                  <div class="feature-icon">◫</div>
+                  <div>
+                    <h3>Structured Pipeline</h3>
+                    <p>A repeatable system that scales with your ambition.</p>
+                  </div>
+                </div>
+
+                <div class="feature-item">
+                  <div class="feature-icon">🔒</div>
+                  <div>
+                    <h3>Future-Ready</h3>
+                    <p>Built for the next era of software development.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <aside class="side-panel">
+              <div class="right-stack">
+                <div class="code-block flow-block">if (system.ready) {
   deploy(system);
 } else {
   iterate();
 }
 
-class AISYN {
-  constructor() {
-    this.intelligence = true;
-    this.mode = "create";
-  }
-}</div>
-
-    <div class="code-block lower">while (validated) {
+while (!validated) {
   issues = scan(output);
   output = repair(issues);
   validated = test(output);
 }</div>
 
-    <div class="stack-rail">
-      <div class="stack-box">Generate</div>
-      <div class="stack-box">Repair</div>
-      <div class="stack-box">Validate</div>
-      <div class="stack-box">Package</div>
-    </div>
-  </div>
-
-  <div class="nav-shell">
-    <div class="container">
-      <nav class="nav">
-        <div class="brand">
-          <img src="Logo.jpg" alt="AISYN logo">
-          <span>AISYN Systems</span>
-        </div>
-
-        <div class="nav-links">
-          <a href="#home">Home</a>
-          <a href="#how-it-works">How It Works</a>
-          <a href="#for-you">For Developers</a>
-          <a href="#for-you">For Companies</a>
-          <a href="#roadmap">Roadmap</a>
-          <a href="#story">About</a>
-        </div>
-
-        <a class="nav-button" href="#waitlist">Join Waitlist</a>
-      </nav>
-    </div>
-  </div>
-
-  <main>
-    <section id="home" class="hero">
-      <div class="container">
-        <img class="hero-logo" src="Logo.jpg" alt="AISYN logo">
-        <p class="hero-kicker">Autonomous Intelligence System</p>
-        <h1>Software Creation, <span class="accent">Reimagined.</span></h1>
-        <div class="hero-subheadline">From intent to intelligent execution.</div>
-        <p class="hero-description">
-          AISYN is building a system that turns plain instructions into working software through structured generation, repair, validation, and packaging.
-        </p>
-
-        <div class="hero-buttons">
-          <a class="btn btn-primary" href="#waitlist">Join the Waitlist</a>
-          <a class="btn btn-secondary" href="#story">Watch Vision</a>
-        </div>
-
-        <div class="feature-strip">
-          <div class="feature-item">
-            <h3>Faster Creation</h3>
-            <p>Move from idea to working software dramatically faster.</p>
-          </div>
-          <div class="feature-item">
-            <h3>Built-in Reliability</h3>
-            <p>Automatic repair and validation ensure higher quality output.</p>
-          </div>
-          <div class="feature-item">
-            <h3>Structured Pipeline</h3>
-            <p>A repeatable system that scales with your ambition.</p>
-          </div>
-          <div class="feature-item">
-            <h3>Future-Ready</h3>
-            <p>Built for the next era of software development.</p>
+                <div class="stack-steps" aria-hidden="true">
+                  <div class="stack-box">Generate</div>
+                  <div class="stack-box">Repair</div>
+                  <div class="stack-box">Validate</div>
+                  <div class="stack-box">Package</div>
+                </div>
+              </div>
+            </aside>
           </div>
         </div>
-      </div>
-    </section>
+      </section>
 
-    <section id="how-it-works" class="section">
-      <div class="container">
-        <p class="section-label">How it works</p>
-        <h2>A Structured Pipeline from Prompt to Program</h2>
-        <p class="section-subtext">
-          AISYN follows a repeatable flow designed to move from high-level intent to tested, validated, packaged output.
-        </p>
-
-        <div class="pipeline-grid">
-          <div class="pipeline-card">
-            <div class="pipeline-icon">&lt;/&gt;</div>
-            <h3>Prompt</h3>
-            <p>You provide the intent.</p>
-          </div>
-
-          <div class="pipeline-card">
-            <div class="pipeline-icon">📄</div>
-            <h3>Specification</h3>
-            <p>AISYN understands the requirements.</p>
-          </div>
-
-          <div class="pipeline-card purple">
-            <div class="pipeline-icon">⋮⋮</div>
-            <h3>Task Breakdown</h3>
-            <p>Complex tasks are decomposed.</p>
-          </div>
-
-          <div class="pipeline-card purple">
-            <div class="pipeline-icon">&lt;/&gt;</div>
-            <h3>Code Generation</h3>
-            <p>Structured code is generated.</p>
-          </div>
-
-          <div class="pipeline-card">
-            <div class="pipeline-icon">↻</div>
-            <h3>Repair Loop</h3>
-            <p>Issues are found and fixed.</p>
-          </div>
-
-          <div class="pipeline-card">
-            <div class="pipeline-icon">🛡</div>
-            <h3>Validation</h3>
-            <p>Output is tested and verified.</p>
-          </div>
-
-          <div class="pipeline-card">
-            <div class="pipeline-icon">▶</div>
-            <h3>Execution</h3>
-            <p>The system runs it.</p>
-          </div>
-
-          <div class="pipeline-card purple">
-            <div class="pipeline-icon">⬡</div>
-            <h3>Packaging</h3>
-            <p>Delivered in a clean, usable format.</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section id="for-you" class="section">
-      <div class="container">
-        <p class="section-label">Built for every builder</p>
-        <h2>For Developers. For Companies.</h2>
-        <p class="section-subtext">
-          AISYN is being shaped for both technical builders and organizations that want faster, more structured software creation.
-        </p>
-
-        <div class="split-grid">
-          <div class="split-card devs">
-            <h3>For Developers</h3>
-            <ul>
-              <li>Reduce repetitive setup and boilerplate work</li>
-              <li>Move faster from prompt to usable output</li>
-              <li>Use structured reports and artifacts for review</li>
-              <li>Work with a system built around repeatability</li>
-            </ul>
-          </div>
-
-          <div class="split-card companies">
-            <h3>For Companies</h3>
-            <ul>
-              <li>Reduce time from idea to working internal tools</li>
-              <li>Standardize software creation pipelines</li>
-              <li>Improve visibility into generated outputs</li>
-              <li>Prepare for scalable, system-level automation</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section id="roadmap" class="section">
-      <div class="container">
-        <p class="section-label">Roadmap</p>
-        <h2>Built in structured phases.</h2>
-        <p class="section-subtext">
-          AISYN is actively being developed through controlled system phases focused on reliability, visibility, security, and future intelligent automation.
-        </p>
-      </div>
-    </section>
-
-    <section id="story" class="section">
-      <div class="container">
-        <p class="section-label">Why AISYN exists</p>
-        <h2>Software creation is still too manual, fragmented, and slow.</h2>
-        <p class="section-subtext">
-          AISYN is being built to reduce the distance between an idea and a working system.
-        </p>
-      </div>
-    </section>
-
-    <section id="waitlist" class="section">
-      <div class="container">
-        <p class="section-label">Be part of the future</p>
-        <h2>Join the AISYN Waitlist</h2>
-        <p class="section-subtext">
-          AISYN is currently in private development. Join the waitlist to get early access, updates, and be the first to experience intelligent software creation.
-        </p>
-
-        <div class="waitlist-layout">
-          <div class="waitlist-info">
-            <h3>Join the <span class="accent">AISYN</span> Waitlist</h3>
+      <section class="section" id="how-it-works">
+        <div class="container">
+          <div class="section-header">
+            <span class="eyebrow">How It Works</span>
+            <h2>A Structured Pipeline from Prompt to Program</h2>
             <p>
-              Follow the build before public release and get early access information, future announcements, and product updates.
+              AISYN follows a repeatable system designed to move from high-level intent to tested,
+              validated, packaged output.
             </p>
-
-            <div class="waitlist-points">
-              <div class="waitlist-point">
-                <strong>No spam</strong>
-                We respect your inbox.
-              </div>
-              <div class="waitlist-point">
-                <strong>Early access</strong>
-                Be the first to try AISYN.
-              </div>
-            </div>
           </div>
 
-          <div class="waitlist-form-wrap">
-            <h3>Get Updates</h3>
+          <div class="pipeline-row">
+            <article class="pipeline-card">
+              <div class="pipeline-icon">&lt;/&gt;</div>
+              <h3>Prompt</h3>
+              <p>You provide the intent.</p>
+            </article>
 
-            <form
-              id="aisyn-waitlist-form"
-              name="aisyn-waitlist"
-              method="POST"
-              data-netlify="true"
-              netlify-honeypot="bot-field"
-            >
-              <input type="hidden" name="form-name" value="aisyn-waitlist">
+            <article class="pipeline-card">
+              <div class="pipeline-icon">📄</div>
+              <h3>Specification</h3>
+              <p>AISYN understands the requirements.</p>
+            </article>
 
-              <p style="display:none;">
-                <label>Don’t fill this out if you’re human: <input name="bot-field"></label>
+            <article class="pipeline-card">
+              <div class="pipeline-icon">▦</div>
+              <h3>Task Breakdown</h3>
+              <p>Complex tasks are decomposed.</p>
+            </article>
+
+            <article class="pipeline-card">
+              <div class="pipeline-icon">⌘</div>
+              <h3>Code Generation</h3>
+              <p>Structured code is generated.</p>
+            </article>
+
+            <article class="pipeline-card">
+              <div class="pipeline-icon">↻</div>
+              <h3>Repair Loop</h3>
+              <p>Issues are found and fixed.</p>
+            </article>
+
+            <article class="pipeline-card">
+              <div class="pipeline-icon">✓</div>
+              <h3>Validation</h3>
+              <p>Output is tested and verified.</p>
+            </article>
+
+            <article class="pipeline-card">
+              <div class="pipeline-icon">▷</div>
+              <h3>Execution</h3>
+              <p>The system runs it.</p>
+            </article>
+
+            <article class="pipeline-card">
+              <div class="pipeline-icon">◫</div>
+              <h3>Packaging</h3>
+              <p>Delivered in a clean, usable format.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="developers">
+        <div class="container">
+          <div class="section-header">
+            <span class="eyebrow">Built for Every Builder</span>
+            <h2>For Developers. For Companies.</h2>
+            <p>
+              AISYN is being shaped for both technical builders and organizations that want faster,
+              more structured software creation.
+            </p>
+          </div>
+
+          <div class="builder-grid">
+            <article class="builder-card dev">
+              <h3>For Developers</h3>
+              <ul>
+                <li>Reduce repetitive setup and boilerplate work.</li>
+                <li>Move faster from prompt to usable output.</li>
+                <li>Use structured reports and artifacts for review.</li>
+                <li>Work with a system built around repeatability.</li>
+              </ul>
+            </article>
+
+            <article class="builder-card company" id="companies">
+              <h3>For Companies</h3>
+              <ul>
+                <li>Reduce time from idea to working internal tools.</li>
+                <li>Standardize software creation pipelines.</li>
+                <li>Improve visibility into generated outputs.</li>
+                <li>Prepare for scalable, system-level automation.</li>
+              </ul>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section simple-copy" id="roadmap">
+        <div class="container">
+          <div class="copy-block">
+            <span class="eyebrow">Built in Structured Phases</span>
+            <h2>Built in structured phases.</h2>
+            <p>
+              AISYN is actively being developed through controlled system phases focused on reliability,
+              usability, security, and future intelligent automation.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section class="section simple-copy" id="about">
+        <div class="container">
+          <div class="copy-block">
+            <span class="eyebrow">Why AISYN Exists</span>
+            <h2>Software creation is still too manual, fragmented, and slow.</h2>
+            <p>
+              AISYN is being built to reduce the distance between an idea and a working system.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section class="section waitlist-section" id="waitlist">
+        <div class="container">
+          <div class="section-header">
+            <span class="eyebrow">Be Part of the Future</span>
+            <h2>Join the AISYN Waitlist</h2>
+            <p>
+              AISYN is currently in private development. Join the waitlist to get early access, updates,
+              and be the first to experience intelligent software creation.
+            </p>
+          </div>
+
+          <div class="waitlist-grid">
+            <div class="waitlist-info">
+              <h2>Join the <span class="accent">AISYN</span> Waitlist</h2>
+              <p>
+                Follow the build before public release and get early access information, future announcements,
+                and product updates.
               </p>
 
-              <div class="waitlist-form">
-                <input type="text" name="name" placeholder="Your name" required>
-                <input type="email" name="email" placeholder="Your email" required>
-                <select name="interest">
-                  <option value="">I'm interested in...</option>
-                  <option value="developer">Using AISYN as a developer</option>
-                  <option value="company">Using AISYN for a company</option>
-                  <option value="early-access">Early access</option>
-                  <option value="updates">General updates</option>
-                </select>
-                <textarea name="message" placeholder="Optional message"></textarea>
-                <button class="btn btn-primary waitlist-submit" type="submit">Join the Waitlist</button>
-              </div>
-            </form>
+              <div class="waitlist-meta">
+                <div class="meta-item">
+                  <div class="meta-icon">🛡</div>
+                  <div>
+                    <strong>No spam</strong>
+                    <span>We respect your inbox.</span>
+                  </div>
+                </div>
 
-            <div class="fine-print">
-              Prefer direct contact? Email us at aisyn.systems@gmail.com
+                <div class="meta-item">
+                  <div class="meta-icon">🚀</div>
+                  <div>
+                    <strong>Early access</strong>
+                    <span>Be the first to try AISYN.</span>
+                  </div>
+                </div>
+              </div>
             </div>
+
+            <div class="waitlist-form-card">
+              <form id="waitlistForm">
+                <div class="field">
+                  <label for="name">Your name</label>
+                  <input id="name" name="name" type="text" placeholder="Your name" required />
+                </div>
+
+                <div class="field">
+                  <label for="email">Your email</label>
+                  <input id="email" name="email" type="email" placeholder="Your email" required />
+                </div>
+
+                <div class="field">
+                  <label for="interest">I'm interested in...</label>
+                  <select id="interest" name="interest" required>
+                    <option value="" disabled selected>Select an option</option>
+                    <option value="developer">Developer access</option>
+                    <option value="company">Company use</option>
+                    <option value="investor">Investor updates</option>
+                    <option value="general">General updates</option>
+                  </select>
+                </div>
+
+                <div class="field">
+                  <label for="message">Optional message</label>
+                  <textarea id="message" name="message" placeholder="Optional message"></textarea>
+                </div>
+
+                <button class="waitlist-submit" type="submit">Join the Waitlist →</button>
+                <p class="form-note">
+                  Replace this form submit logic with your live waitlist endpoint, Netlify form handling,
+                  or connected backend when ready.
+                </p>
+              </form>
+            </div>
+
+            <aside class="waitlist-status" id="sideStatusCard">
+              <button class="status-close" type="button" id="sideStatusClose" aria-label="Close side card">×</button>
+
+              <div class="status-visual" aria-hidden="true">
+                <div class="mini-orbit"></div>
+                <div class="mini-symbol">
+                  <span class="l"></span>
+                  <span class="r"></span>
+                  <span class="s"></span>
+                </div>
+              </div>
+
+              <h3>You’re on the list.</h3>
+              <p>
+                Thanks for joining the AISYN waitlist. We’ll send updates, early access information,
+                and future announcements to your email.
+              </p>
+
+              <button class="status-button" type="button" id="statusActionButton">Awesome!</button>
+            </aside>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div class="container">
+        <div class="footer-inner">
+          <a class="brand" href="#top" aria-label="AISYN Systems home">
+            <div class="brand-mark" aria-hidden="true"></div>
+            <div class="brand-text">AISYN SYSTEMS</div>
+          </a>
+
+          <div class="footer-copy">Building the future of software creation.</div>
+
+          <div class="footer-socials" aria-label="Social links">
+            <a href="#" aria-label="GitHub">G</a>
+            <a href="#" aria-label="X">X</a>
+            <a href="#" aria-label="LinkedIn">in</a>
+            <a href="mailto:hello@aisynsystems.com" aria-label="Email">✉</a>
           </div>
         </div>
       </div>
-    </section>
-  </main>
+    </footer>
+  </div>
 
-  <div id="success-modal" class="success-modal" aria-hidden="true">
-    <div class="success-modal-card">
-      <button id="close-success-modal" class="success-close" type="button" aria-label="Close popup">×</button>
-      <img class="success-modal-logo" src="Logo.jpg" alt="AISYN logo">
-      <h3>You're on the list.</h3>
+  <div class="modal-backdrop" id="waitlistModal" aria-hidden="true">
+    <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <button class="modal-close" type="button" id="modalClose" aria-label="Close popup">×</button>
+
+      <div class="status-visual" aria-hidden="true">
+        <div class="mini-orbit"></div>
+        <div class="mini-symbol">
+          <span class="l"></span>
+          <span class="r"></span>
+          <span class="s"></span>
+        </div>
+      </div>
+
+      <h3 id="modalTitle">You’re on the list.</h3>
       <p>
-        Thanks for joining the AISYN waitlist. We'll send updates, early access information, and future announcements to your email.
+        Thanks for joining the AISYN waitlist. We’ll send updates, early access information,
+        and future announcements to your email.
       </p>
-      <button id="success-modal-button" class="btn btn-primary" type="button">Awesome!</button>
+
+      <button class="status-button" type="button" id="modalAction">Awesome!</button>
     </div>
   </div>
 
-  <footer class="footer">
-    <div class="container">
-      <div class="footer-inner">
-        <div class="footer-brand">
-          <img src="Logo.jpg" alt="AISYN logo">
-          <span>AISYN Systems</span>
-        </div>
-        <div>Building the future of software creation.</div>
-        <div class="footer-icons">
-          <span>◉</span>
-          <span>𝕏</span>
-          <span>in</span>
-          <span>✉</span>
-        </div>
-      </div>
-    </div>
-  </footer>
-
   <script>
-    const waitlistForm = document.getElementById("aisyn-waitlist-form");
-    const successModal = document.getElementById("success-modal");
-    const closeSuccessModal = document.getElementById("close-success-modal");
-    const successModalButton = document.getElementById("success-modal-button");
+    const mobileToggle = document.getElementById("mobileToggle");
+    const mobileNav = document.getElementById("mobileNav");
 
-    function encodeFormData(form) {
-      const formData = new FormData(form);
-      return new URLSearchParams(formData).toString();
+    if (mobileToggle && mobileNav) {
+      mobileToggle.addEventListener("click", () => {
+        mobileNav.classList.toggle("open");
+      });
+
+      mobileNav.querySelectorAll("a").forEach((link) => {
+        link.addEventListener("click", () => {
+          mobileNav.classList.remove("open");
+        });
+      });
     }
 
-    function openSuccessModal() {
-      successModal.classList.add("show");
-      successModal.setAttribute("aria-hidden", "false");
+    const waitlistForm = document.getElementById("waitlistForm");
+    const waitlistModal = document.getElementById("waitlistModal");
+    const modalClose = document.getElementById("modalClose");
+    const modalAction = document.getElementById("modalAction");
+    const sideStatusClose = document.getElementById("sideStatusClose");
+    const statusActionButton = document.getElementById("statusActionButton");
+    const sideStatusCard = document.getElementById("sideStatusCard");
+
+    function openWaitlistModal() {
+      waitlistModal.classList.add("active");
+      waitlistModal.setAttribute("aria-hidden", "false");
       document.body.style.overflow = "hidden";
     }
 
-    function closeModal() {
-      successModal.classList.remove("show");
-      successModal.setAttribute("aria-hidden", "true");
+    function closeWaitlistModal() {
+      waitlistModal.classList.remove("active");
+      waitlistModal.setAttribute("aria-hidden", "true");
       document.body.style.overflow = "";
     }
 
     if (waitlistForm) {
-      waitlistForm.addEventListener("submit", async function (event) {
+      waitlistForm.addEventListener("submit", (event) => {
         event.preventDefault();
 
-        try {
-          const response = await fetch("/", {
-            method: "POST",
-            headers: { "Content-Type": "application/x-www-form-urlencoded" },
-            body: encodeFormData(waitlistForm)
-          });
+        const name = document.getElementById("name");
+        const email = document.getElementById("email");
+        const interest = document.getElementById("interest");
 
-          if (!response.ok) {
-            throw new Error("Submission failed.");
-          }
+        if (!name.value.trim() || !email.value.trim() || !interest.value) {
+          return;
+        }
 
-          waitlistForm.reset();
-          openSuccessModal();
-        } catch (error) {
-          alert("Something went wrong submitting the form. Please try again.");
+        openWaitlistModal();
+        waitlistForm.reset();
+      });
+    }
+
+    if (modalClose) modalClose.addEventListener("click", closeWaitlistModal);
+    if (modalAction) modalAction.addEventListener("click", closeWaitlistModal);
+
+    if (waitlistModal) {
+      waitlistModal.addEventListener("click", (event) => {
+        if (event.target === waitlistModal) {
+          closeWaitlistModal();
         }
       });
     }
 
-    if (closeSuccessModal) {
-      closeSuccessModal.addEventListener("click", closeModal);
-    }
-
-    if (successModalButton) {
-      successModalButton.addEventListener("click", closeModal);
-    }
-
-    if (successModal) {
-      successModal.addEventListener("click", function (event) {
-        if (event.target === successModal) {
-          closeModal();
-        }
+    if (sideStatusClose && sideStatusCard) {
+      sideStatusClose.addEventListener("click", () => {
+        sideStatusCard.style.display = "none";
       });
     }
 
-    document.addEventListener("keydown", function (event) {
-      if (event.key === "Escape" && successModal.classList.contains("show")) {
-        closeModal();
+    if (statusActionButton && sideStatusCard) {
+      statusActionButton.addEventListener("click", () => {
+        sideStatusCard.style.display = "none";
+      });
+    }
+
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape") {
+        closeWaitlistModal();
       }
     });
   </script>
