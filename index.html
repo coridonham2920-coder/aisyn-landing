@@ -173,20 +173,18 @@
       place-items: center;
       position: relative;
       background:
-        radial-gradient(circle at 30% 20%, rgba(130, 214, 255, 0.45), transparent 38%),
-        linear-gradient(180deg, rgba(73, 145, 255, 0.18), rgba(9, 17, 32, 0.1));
-      box-shadow: inset 0 0 0 1px rgba(120, 183, 255, 0.12), 0 0 18px rgba(63, 122, 255, 0.22);
+        radial-gradient(circle at 30% 20%, rgba(130, 214, 255, 0.25), transparent 38%),
+        linear-gradient(180deg, rgba(73, 145, 255, 0.10), rgba(9, 17, 32, 0.06));
+      box-shadow: inset 0 0 0 1px rgba(120, 183, 255, 0.08), 0 0 18px rgba(63, 122, 255, 0.12);
       overflow: hidden;
+      padding: 4px;
     }
 
-    .brand-mark::before {
-      content: "A";
-      font-size: 27px;
-      font-weight: 800;
-      letter-spacing: -0.06em;
-      color: #8fe3ff;
-      text-shadow: 0 0 18px rgba(110, 202, 255, 0.45);
-      transform: translateY(-1px);
+    .brand-mark svg {
+      width: 100%;
+      height: 100%;
+      display: block;
+      filter: drop-shadow(0 0 8px rgba(110, 202, 255, 0.28));
     }
 
     .brand-text {
@@ -426,56 +424,20 @@
       z-index: 1;
     }
 
-    .hero-symbol {
-      width: 260px;
-      height: 260px;
+    .hero-symbol-wrap {
+      width: 330px;
+      height: 330px;
       position: relative;
-      margin: 0 auto 22px;
-      filter: drop-shadow(0 0 32px rgba(98, 180, 255, 0.42));
+      margin: 0 auto 10px;
+      display: grid;
+      place-items: center;
+      filter: drop-shadow(0 0 28px rgba(98, 180, 255, 0.26));
     }
 
-    .hero-symbol .arc-left,
-    .hero-symbol .arc-right,
-    .hero-symbol .inner-swoop {
-      position: absolute;
+    .hero-symbol-wrap svg {
+      width: 100%;
+      height: 100%;
       display: block;
-      border-radius: 999px;
-    }
-
-    .hero-symbol .arc-left,
-    .hero-symbol .arc-right {
-      width: 84px;
-      height: 220px;
-      top: 10px;
-      background: linear-gradient(180deg, #b6f6ff 0%, #7ad0ff 35%, #5ea5ff 70%, #83e7ff 100%);
-      box-shadow: 0 0 28px rgba(110, 214, 255, 0.36), inset 0 0 10px rgba(255, 255, 255, 0.28);
-    }
-
-    .hero-symbol .arc-left {
-      left: 38px;
-      transform: rotate(24deg);
-      transform-origin: center;
-    }
-
-    .hero-symbol .arc-right {
-      right: 38px;
-      transform: rotate(-24deg);
-      transform-origin: center;
-    }
-
-    .hero-symbol .inner-swoop {
-      width: 126px;
-      height: 76px;
-      left: 67px;
-      bottom: 45px;
-      border: 18px solid transparent;
-      border-top: 0;
-      border-right: 0;
-      border-left-color: rgba(89, 173, 255, 0.96);
-      border-bottom-color: rgba(66, 123, 255, 0.96);
-      transform: rotate(-35deg);
-      box-shadow: 0 0 20px rgba(73, 144, 255, 0.22);
-      filter: drop-shadow(0 0 12px rgba(74, 138, 255, 0.25));
     }
 
     .hero-orbit {
@@ -518,6 +480,7 @@
       text-align: center;
       position: relative;
       z-index: 2;
+      margin-top: -12px;
     }
 
     .hero-wordmark .aisyn {
@@ -1093,49 +1056,18 @@
       transform: rotate(-24deg);
     }
 
-    .mini-symbol {
-      width: 138px;
-      height: 138px;
+    .mini-logo {
+      width: 120px;
+      height: 120px;
       position: relative;
-      filter: drop-shadow(0 0 18px rgba(88, 155, 255, 0.34));
+      z-index: 2;
+      filter: drop-shadow(0 0 16px rgba(88, 155, 255, 0.22));
     }
 
-    .mini-symbol span {
-      position: absolute;
+    .mini-logo svg {
+      width: 100%;
+      height: 100%;
       display: block;
-      border-radius: 999px;
-    }
-
-    .mini-symbol .l,
-    .mini-symbol .r {
-      width: 44px;
-      height: 122px;
-      top: 2px;
-      background: linear-gradient(180deg, #b6f6ff 0%, #7ad0ff 35%, #5ea5ff 70%, #83e7ff 100%);
-      box-shadow: 0 0 18px rgba(110, 214, 255, 0.3);
-    }
-
-    .mini-symbol .l {
-      left: 20px;
-      transform: rotate(24deg);
-    }
-
-    .mini-symbol .r {
-      right: 20px;
-      transform: rotate(-24deg);
-    }
-
-    .mini-symbol .s {
-      width: 74px;
-      height: 45px;
-      left: 34px;
-      bottom: 22px;
-      border: 12px solid transparent;
-      border-top: 0;
-      border-right: 0;
-      border-left-color: rgba(89, 173, 255, 0.96);
-      border-bottom-color: rgba(66, 123, 255, 0.96);
-      transform: rotate(-35deg);
     }
 
     .waitlist-status h3 {
@@ -1389,34 +1321,9 @@
         width: 100%;
       }
 
-      .hero-symbol {
-        width: 210px;
-        height: 210px;
-        margin-bottom: 16px;
-      }
-
-      .hero-symbol .arc-left,
-      .hero-symbol .arc-right {
-        width: 70px;
-        height: 180px;
-      }
-
-      .hero-symbol .arc-left {
-        left: 30px;
-      }
-
-      .hero-symbol .arc-right {
-        right: 30px;
-      }
-
-      .hero-symbol .inner-swoop {
-        width: 102px;
-        height: 60px;
-        left: 55px;
-        bottom: 34px;
-        border-width: 15px;
-        border-top: 0;
-        border-right: 0;
+      .hero-symbol-wrap {
+        width: 240px;
+        height: 240px;
       }
 
       .hero-orbit {
@@ -1502,7 +1409,24 @@
     <div class="topbar-wrap">
       <header class="topbar">
         <a class="brand" href="#top" aria-label="AISYN Systems home">
-          <div class="brand-mark" aria-hidden="true"></div>
+          <div class="brand-mark" aria-hidden="true">
+            <svg viewBox="0 0 200 200" aria-hidden="true">
+              <defs>
+                <linearGradient id="miniOuter" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0%" stop-color="#bdf7ff"/>
+                  <stop offset="45%" stop-color="#7fd3ff"/>
+                  <stop offset="75%" stop-color="#5ea5ff"/>
+                  <stop offset="100%" stop-color="#8cf0ff"/>
+                </linearGradient>
+                <linearGradient id="miniInner" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0%" stop-color="#79ddff"/>
+                  <stop offset="100%" stop-color="#3878ff"/>
+                </linearGradient>
+              </defs>
+              <path d="M42 142C34 142 27 137 24 130C20 122 21 114 27 106L77 30C82 22 90 18 100 18C110 18 118 22 123 30L173 106C179 114 180 122 176 130C173 137 166 142 158 142C152 142 147 140 143 136L100 61L57 136C53 140 48 142 42 142Z" fill="url(#miniOuter)"/>
+              <path d="M78 127C85 92 109 71 139 67C128 70 118 75 110 83C99 94 93 108 90 124C89 131 84 135 78 135C74 135 71 134 68 131C72 130 75 129 78 127Z" fill="url(#miniInner)"/>
+            </svg>
+          </div>
           <div class="brand-text">AISYN SYSTEMS</div>
         </a>
 
@@ -1548,10 +1472,51 @@
                   <div class="hero-orbit" aria-hidden="true"></div>
 
                   <div class="hero-logo-core">
-                    <div class="hero-symbol" aria-hidden="true">
-                      <span class="arc-left"></span>
-                      <span class="arc-right"></span>
-                      <span class="inner-swoop"></span>
+                    <div class="hero-symbol-wrap" aria-hidden="true">
+                      <svg viewBox="0 0 600 600">
+                        <defs>
+                          <radialGradient id="heroGlow" cx="50%" cy="45%" r="55%">
+                            <stop offset="0%" stop-color="rgba(187,245,255,0.55)"/>
+                            <stop offset="30%" stop-color="rgba(123,213,255,0.25)"/>
+                            <stop offset="100%" stop-color="rgba(90,140,255,0)"/>
+                          </radialGradient>
+
+                          <linearGradient id="heroOuter" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" stop-color="#d8ffff"/>
+                            <stop offset="25%" stop-color="#b8f5ff"/>
+                            <stop offset="55%" stop-color="#7fd3ff"/>
+                            <stop offset="78%" stop-color="#5ea5ff"/>
+                            <stop offset="100%" stop-color="#8af0ff"/>
+                          </linearGradient>
+
+                          <linearGradient id="heroInner" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" stop-color="#8de7ff"/>
+                            <stop offset="100%" stop-color="#3f7fff"/>
+                          </linearGradient>
+
+                          <filter id="softGlow" x="-50%" y="-50%" width="200%" height="200%">
+                            <feGaussianBlur stdDeviation="10" result="blur"/>
+                            <feMerge>
+                              <feMergeNode in="blur"/>
+                              <feMergeNode in="SourceGraphic"/>
+                            </feMerge>
+                          </filter>
+                        </defs>
+
+                        <circle cx="300" cy="290" r="170" fill="url(#heroGlow)"/>
+
+                        <path
+                          d="M155 404C132 404 114 392 105 373C95 351 98 327 116 304L240 117C254 96 274 85 300 85C326 85 346 96 360 117L484 304C502 327 505 351 495 373C486 392 468 404 445 404C429 404 415 399 404 389L300 203L196 389C185 399 171 404 155 404Z"
+                          fill="url(#heroOuter)"
+                          filter="url(#softGlow)"
+                        />
+
+                        <path
+                          d="M245 359C258 272 319 219 396 208C367 217 341 234 320 257C292 289 276 325 270 367C266 385 253 397 236 397C225 397 216 394 208 386C220 384 233 376 245 359Z"
+                          fill="url(#heroInner)"
+                          filter="url(#softGlow)"
+                        />
+                      </svg>
                     </div>
 
                     <div class="hero-wordmark">
@@ -1840,10 +1805,24 @@ while (!validated) {
 
               <div class="status-visual" aria-hidden="true">
                 <div class="mini-orbit"></div>
-                <div class="mini-symbol">
-                  <span class="l"></span>
-                  <span class="r"></span>
-                  <span class="s"></span>
+                <div class="mini-logo">
+                  <svg viewBox="0 0 200 200" aria-hidden="true">
+                    <defs>
+                      <linearGradient id="statusOuter" x1="0" y1="0" x2="1" y2="1">
+                        <stop offset="0%" stop-color="#d8ffff"/>
+                        <stop offset="25%" stop-color="#b8f5ff"/>
+                        <stop offset="55%" stop-color="#7fd3ff"/>
+                        <stop offset="78%" stop-color="#5ea5ff"/>
+                        <stop offset="100%" stop-color="#8af0ff"/>
+                      </linearGradient>
+                      <linearGradient id="statusInner" x1="0" y1="0" x2="1" y2="1">
+                        <stop offset="0%" stop-color="#8de7ff"/>
+                        <stop offset="100%" stop-color="#3f7fff"/>
+                      </linearGradient>
+                    </defs>
+                    <path d="M42 142C34 142 27 137 24 130C20 122 21 114 27 106L77 30C82 22 90 18 100 18C110 18 118 22 123 30L173 106C179 114 180 122 176 130C173 137 166 142 158 142C152 142 147 140 143 136L100 61L57 136C53 140 48 142 42 142Z" fill="url(#statusOuter)"/>
+                    <path d="M78 127C85 92 109 71 139 67C128 70 118 75 110 83C99 94 93 108 90 124C89 131 84 135 78 135C74 135 71 134 68 131C72 130 75 129 78 127Z" fill="url(#statusInner)"/>
+                  </svg>
                 </div>
               </div>
 
@@ -1864,7 +1843,24 @@ while (!validated) {
       <div class="container">
         <div class="footer-inner">
           <a class="brand" href="#top" aria-label="AISYN Systems home">
-            <div class="brand-mark" aria-hidden="true"></div>
+            <div class="brand-mark" aria-hidden="true">
+              <svg viewBox="0 0 200 200" aria-hidden="true">
+                <defs>
+                  <linearGradient id="footerOuter" x1="0" y1="0" x2="1" y2="1">
+                    <stop offset="0%" stop-color="#bdf7ff"/>
+                    <stop offset="45%" stop-color="#7fd3ff"/>
+                    <stop offset="75%" stop-color="#5ea5ff"/>
+                    <stop offset="100%" stop-color="#8cf0ff"/>
+                  </linearGradient>
+                  <linearGradient id="footerInner" x1="0" y1="0" x2="1" y2="1">
+                    <stop offset="0%" stop-color="#79ddff"/>
+                    <stop offset="100%" stop-color="#3878ff"/>
+                  </linearGradient>
+                </defs>
+                <path d="M42 142C34 142 27 137 24 130C20 122 21 114 27 106L77 30C82 22 90 18 100 18C110 18 118 22 123 30L173 106C179 114 180 122 176 130C173 137 166 142 158 142C152 142 147 140 143 136L100 61L57 136C53 140 48 142 42 142Z" fill="url(#footerOuter)"/>
+                <path d="M78 127C85 92 109 71 139 67C128 70 118 75 110 83C99 94 93 108 90 124C89 131 84 135 78 135C74 135 71 134 68 131C72 130 75 129 78 127Z" fill="url(#footerInner)"/>
+              </svg>
+            </div>
             <div class="brand-text">AISYN SYSTEMS</div>
           </a>
 
@@ -1887,10 +1883,24 @@ while (!validated) {
 
       <div class="status-visual" aria-hidden="true">
         <div class="mini-orbit"></div>
-        <div class="mini-symbol">
-          <span class="l"></span>
-          <span class="r"></span>
-          <span class="s"></span>
+        <div class="mini-logo">
+          <svg viewBox="0 0 200 200" aria-hidden="true">
+            <defs>
+              <linearGradient id="modalOuter" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" stop-color="#d8ffff"/>
+                <stop offset="25%" stop-color="#b8f5ff"/>
+                <stop offset="55%" stop-color="#7fd3ff"/>
+                <stop offset="78%" stop-color="#5ea5ff"/>
+                <stop offset="100%" stop-color="#8af0ff"/>
+              </linearGradient>
+              <linearGradient id="modalInner" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" stop-color="#8de7ff"/>
+                <stop offset="100%" stop-color="#3f7fff"/>
+              </linearGradient>
+            </defs>
+            <path d="M42 142C34 142 27 137 24 130C20 122 21 114 27 106L77 30C82 22 90 18 100 18C110 18 118 22 123 30L173 106C179 114 180 122 176 130C173 137 166 142 158 142C152 142 147 140 143 136L100 61L57 136C53 140 48 142 42 142Z" fill="url(#modalOuter)"/>
+            <path d="M78 127C85 92 109 71 139 67C128 70 118 75 110 83C99 94 93 108 90 124C89 131 84 135 78 135C74 135 71 134 68 131C72 130 75 129 78 127Z" fill="url(#modalInner)"/>
+          </svg>
         </div>
       </div>
 
